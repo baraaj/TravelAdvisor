@@ -13,24 +13,26 @@ export default function SignUp(props) {
   
    
     return (
+       
         <View style={styles.container}>
-
+       
             <StatusBar style="auto" />
             <Background />
             <View
                 style={{
-                    height:300,
+                    height:400,
                     width:"90%",
                     backgroundColor:"#0005",
                     borderRadius:10,
                     alignItems:"center",
                     justifyContent:"center",
+                    
                 }}
                 
             >
-                
-                <Text style={{fontSize:36,fontWeight:"bold",color:"white"}}>
-                    Authentication
+              
+                <Text style={{fontSize:36,fontWeight:"bold",color:"white",marginTop:0}}>
+                    Sign Up
                 </Text>
                 <TextInput
                     style={styles.textinput}
@@ -50,14 +52,17 @@ export default function SignUp(props) {
                     placeholder="Repeat Password"
                     secureTextEntry={true}
                 ></TextInput>
-                <Button onPress={()=>{
+                
+                <TouchableOpacity onPress={()=>{
                     auth.createUserWithEmailAndPassword(email,password)
                         .then(()=>{props.navigation.replace("Travel")})
                         .catch((err)=>{
                             alert(err);
                         })
-                }} title="Create New Account"></Button>
-            </View>
+                }} title="Create New Account" style={styles.button}>  
+                <Text style={{textAlign:"center",justifyContent:"center",color:"white",fontWeight:"bold",fontSize:18}}>Create New Account</Text>
+                </TouchableOpacity>
+                </View> 
         </View>
     );
 }
@@ -70,10 +75,26 @@ const styles = StyleSheet.create({
         textAlign: "center",
         borderRadius: 8,
         margin: 10,
+        marginTop:20,
+        marginBottom:20
     },
     container: {
+        backgroundColor: '#204969',
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-    }
+    },
+    button: {
+        width:"50%",
+         borderRadius:5,
+         backgroundColor:"#0005",
+         height:50,
+         width:200,
+         justifyContent:"center",
+         marginTop:80,
+         alignSelf:"center",
+         marginTop:20
+       
+        
+      }
 });

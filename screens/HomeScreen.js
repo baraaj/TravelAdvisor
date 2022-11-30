@@ -40,8 +40,7 @@ import {
           </Text>
   
           <Text className="text-[#3C6072] text-base">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti odio
-            quis nostrum
+            Share with us your experience!
           </Text>
         </View>
   
@@ -60,7 +59,7 @@ import {
   
           <TouchableOpacity
             //onPress={() => navigation.navigate("Travel")}
-            onPress={() => navigation.navigate("SignUp")}
+            onPress={() => navigation.navigate("Auth")}
             className="absolute bottom-20 w-24 h-24 border-l-2 border-r-2 border-t-4 border-[#00BCC9] rounded-full items-center justify-center"
           >
             <Animatable.View

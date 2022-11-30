@@ -11,6 +11,7 @@ import * as React from 'react';
 import Travel from './screens/Travel';
 import DetailsScreen from './screens/DetailsScreen';
 import Background from './screens/Background';
+import Authentification from './screens/Authentification';
  
 const Stack = createNativeStackNavigator();
 
@@ -26,6 +27,7 @@ export default function App() {
         <Stack.Screen name="Discover" component={Discover} />
         <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen name="Background" component={Background} />
+        <Stack.Screen name="Auth" component={Authentification} />
         
       </Stack.Navigator>
     </NavigationContainer>

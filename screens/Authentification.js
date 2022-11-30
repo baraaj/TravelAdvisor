@@ -4,19 +4,21 @@ import { StyleSheet, Text, View,TextInput } from 'react-native';
 import { Button } from 'react-native';
 import { TouchableOpacity } from 'react-native';
 import initfirebase from './../config/index';
+import Background from './Background';
 import SignUp from './SignUp';
 import Travel from './Travel';
 
 
 export default function Authentification(props) {
     const[email,setEmail]=useState("jridibaraa@gmail.com");
-    const[password,setPassword]=useState("1234567");
+    const[password,setPassword]=useState("123456");
     const auth = initfirebase.auth();
   return (
     <View style={styles.container}>
+      <Background />
       <StatusBar style="light" />
       <View style={styles.view2style}>
-      <Text style={{color:"white",textAlign:"center",fontSize:32,fontWeight:"bold",marginBottom:10}}>Authentification</Text>
+      <Text style={{color:"white",textAlign:"center",fontSize:32,fontWeight:"bold",marginBottom:10}}>Sign In</Text>
       <TextInput style={styles.TextInput} onChangeText={e=>{setEmail(e)}} placeholder='Username@site.com' keyboardType='email-address'></TextInput>
       <TextInput style={styles.TextInput} onChangeText={e=>{setPassword(e)}} placeholder='Password' keyboardType='default'secureTextEntry={true}></TextInput>
       {//<Button title="Validate"></Button>
@@ -58,7 +60,7 @@ export default function Authentification(props) {
         marginBottom:10,
         alignItems:"flex-end",
          
-      }} onPress={()=>{props.navigation.replace("signup")}}>
+      }} onPress={()=>{props.navigation.replace("SignUp")}}>
         <Text style={{color:"white"}}>Create new User</Text>
 
       </TouchableOpacity>
