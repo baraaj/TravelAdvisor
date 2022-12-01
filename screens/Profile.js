@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
        fontSize:34,
        fontWeight:"bold",
        fontStyle:'italic',
-       color:"#a03",
+       color:"#385F71",
       textAlign:"center",
       marginTop:100,
       marginBottom:40
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
     button: {
         width:"50%",
          borderRadius:5,
-         backgroundColor:"#e38b73",
+         backgroundColor:"#225560",
          height:40,
          width:100,
          justifyContent:"center",

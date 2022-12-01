@@ -15,9 +15,9 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { Rating, AirbnbRating } from 'react-native-ratings';
+import { Rating } from 'react-native-ratings';
 import COLORS from './../consts/colors';
-//import Places from './../consts/places';
+
 
 
 const {width} = Dimensions.get('screen');
@@ -27,10 +27,11 @@ const ref_places=database.ref("places");
 const Travel = ({navigation}) => {
   const [data,setdata]= useState([]);
   const[rate,setRate]=useState(null);
-  const[maxRating,setmaxRating]=useState([1,2,3,4,5]);
+   
   const ratingCompleted=(rating)=>{
  
   console.log("Rating is: " + rating)
+  setRate(rating);
   
 }
     useEffect(() => {
@@ -100,7 +101,7 @@ const Travel = ({navigation}) => {
               <Rating
               showRating
               ratingCount={5}
-             onPress={setRate(5)}
+              
               onFinishRating={ratingCompleted}
               imageSize={20}
               style={{ paddingVertical:10,alignItems:"center",marginLeft:-100,marginBottom:-10}}
@@ -155,7 +156,9 @@ const Travel = ({navigation}) => {
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
       <StatusBar translucent={false} backgroundColor={COLORS.primary} />
       <View style={style.header}>
+        <TouchableOpacity  onPress={e=>{e.preventDefault(e),navigation.navigate("Profile")}}>
         <Icon name="sort" size={28} color={COLORS.white} />
+        </TouchableOpacity>
         <Icon name="notifications-none" size={28} color={COLORS.white} />
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
