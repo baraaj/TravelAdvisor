@@ -8,10 +8,11 @@ export default function Experience({ navigation }) {
     const database = initfirebase.database();
     const [data,setdata]= useState([]);
     const storage = initfirebase.storage();
-    const [nom, setNom] = useState("");
-    const [prenom, setPrenom] = useState("");
+    const [name, setName] = useState("");
+    const [localisation, setLocal] = useState("");
     const [image, setImage] = useState(null);
-    const [pseudo, setPseudo] = useState("");
+    const [description, setDesc] = useState("");
+    const [nblike,setNb]=useState(null);
     //const [{nom,prenom,pseudo},setData] = useState({nom:"",prenom:"",pseudo:""});
     const imageToBlob = async (uri) => {
       const blob=await new Promise((resolve,reject)=>{
@@ -35,7 +36,7 @@ const uploadImage = async(uri)=>{
   //convert image to blob
   const blob = await imageToBlob(uri);
   //save blob to ref image
-  const ref_img = storage.ref().child("imageprofiles")
+  const ref_img = storage.ref().child("imageplaces")
       .child("image"+Math.random()*10000+".jpg");
   await ref_img.put(blob)
   //get url
@@ -65,8 +66,8 @@ const pickImage = async () => {
       <Background />
       <Text style={styles.titre}>share with us your experience!</Text>
     
-      <TextInput placeholder="Name of the place" onChangeText={e=>{setNom(e)}} style={styles.TextInput}></TextInput>
-      <TextInput placeholder="Localisation" onChangeText={e=>{setPrenom(e)}} style={styles.TextInput}></TextInput>
+      <TextInput placeholder="Name of the place" onChangeText={e=>{setName(e)}} style={styles.TextInput}></TextInput>
+      <TextInput placeholder="Localisation" onChangeText={e=>{setLocal(e)}} style={styles.TextInput}></TextInput>
       <TextInput
       style={styles.textArea}
       
@@ -74,7 +75,7 @@ const pickImage = async () => {
       numberOfLines={10}
       multiline={true}
     
-       placeholder="Description" onChangeText={e=>{setPseudo(e)}} style={styles.TextInput}></TextInput>
+       placeholder="Description" onChangeText={e=>{setDesc(e)}} style={styles.TextInput}></TextInput>
          <TouchableOpacity onPress={pickImage}>
       <Image  source={ image === null ? require("../assets/location1.jpg") : {uri:image}}
       style={{
@@ -96,31 +97,33 @@ const pickImage = async () => {
         onPress={async () => {
           if (image != null) {
             const url = await uploadImage(image);
-            const ref_profils = database.ref("profils");
-            const key = ref_profils.push().key;
-            ref_profils.child("profil" + key).set({
-              nom: nom,
-              prenom: prenom,
-              pseudo: pseudo,
+            const ref_places = database.ref("places");
+            const key = ref_places.push().key;
+            ref_places.child("place" + key).set({
+              name: name,
+              localisation: localisation,
+              description:description,
               url: url,
+              nblike:nblike
             });
-            navigation.navigate("list");
+            navigation.navigate("Travel");
           } else {
             const url = await uploadImage(image);
-            const ref_profils = database.ref("profils");
-            const key = ref_profils.push().key;
-            ref_profils.child("profil" + key).set({
-              nom: nom,
-              prenom: prenom,
-              pseudo: pseudo,
+            const ref_places = database.ref("places");
+            const key = ref_places.push().key;
+            ref_places.child("place" + key).set({
+              name: name,
+              localisation: localisation,
+              description:description,
+              nblike:nblike,
               url: null,
             });
-            navigation.navigate("list");
+            navigation.navigate("Travel");
           }
         }}
       >
         
-        <Text style={{textAlign:"center",fontWeight:"bold",fontSize:18,color:'white'}}>Save</Text>
+        <Text style={{textAlign:"center",fontWeight:"bold",fontSize:18,color:'white'}}>Add</Text>
 
       </TouchableOpacity>
       
@@ -146,8 +149,8 @@ const styles = StyleSheet.create({
         borderRadius:5 ,
         borderTopEndRadius:5,
         borderTopStartRadius:5,
-         marginTop:20,
-        
+         //marginTop:20,
+        margin:20,
         width:250,
         alignSelf:"center"
     },
@@ -155,7 +158,7 @@ const styles = StyleSheet.create({
        fontSize:34,
        fontWeight:"bold",
        fontStyle:'italic',
-       color:"#a03",
+       color:"#385F71",
       textAlign:"center",
       marginTop:100,
       marginBottom:40
@@ -171,16 +174,18 @@ const styles = StyleSheet.create({
     button: {
         width:"50%",
          borderRadius:5,
-         backgroundColor:"#e38b73",
+         backgroundColor:"#225560",
          height:40,
          width:100,
          justifyContent:"center",
          marginTop:40,
          alignSelf:"center"
+
       },
       textArea: {
         height: 150,
-        justifyContent: "flex-start"
+        justifyContent: "flex-start",
+        marginBottom:40,
       }
 }
 
