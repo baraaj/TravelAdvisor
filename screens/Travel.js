@@ -1,4 +1,6 @@
 import React from 'react';
+import {useState,useEffect} from 'react'
+import initfirebase from '../config/index';
 import {
   SafeAreaView,
   ScrollView,
@@ -15,9 +17,25 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import COLORS from './../consts/colors';
-import Places from './../consts/places';
+//import Places from './../consts/places';
 const {width} = Dimensions.get('screen');
+const database = initfirebase.database();
+const ref_places=database.ref("places");
 const Travel = ({navigation}) => {
+  const [data,setdata]= useState([]);
+    useEffect(() => {
+      ref_places.on("value",(dataSnapshot)=>{
+        let d = [];
+        dataSnapshot.forEach((place)=>{
+            d.push(place.val());
+        });
+        setdata(d);
+    })
+      
+      return () => {
+        ref_places.off();
+      };
+    }, []); 
   const categoryIcons = [
     <Icon name="flight" size={25} color={COLORS.primary} />,
     <Icon name="beach-access" size={25} color={COLORS.primary} />,
@@ -25,6 +43,7 @@ const Travel = ({navigation}) => {
     <Icon name="place" size={25} color={COLORS.primary} />,
   ];
   const ListCategories = () => {
+    
     return (
       <View style={style.categoryContainer}>
         {categoryIcons.map((icon, index) => (
@@ -41,7 +60,7 @@ const Travel = ({navigation}) => {
       <TouchableOpacity
         activeOpacity={0.8}
         onPress={() => navigation.navigate('DetailsScreen', place)}>
-        <ImageBackground style={style.cardImage} source={place.image}>
+        <ImageBackground style={style.cardImage} source={place.url===null? require("../assets/location1.jpg") : {uri:place.url}}>
           <Text
             style={{
               color: COLORS.white,
@@ -61,7 +80,7 @@ const Travel = ({navigation}) => {
             <View style={{flexDirection: 'row'}}>
               <Icon name="place" size={20} color={COLORS.white} />
               <Text style={{marginLeft: 5, color: COLORS.white}}>
-                {place.location}
+                {place.localisation}
               </Text>
             </View>
             <View style={{flexDirection: 'row'}}>
@@ -76,7 +95,7 @@ const Travel = ({navigation}) => {
 
   const RecommendedCard = ({place}) => {
     return (
-      <ImageBackground style={style.rmCardImage} source={place.image}>
+      <ImageBackground style={style.rmCardImage} source={place.url===null? require("../assets/location1.jpg") : {uri:place.url}}>
         <Text
           style={{
             color: COLORS.white,
@@ -96,7 +115,7 @@ const Travel = ({navigation}) => {
             <View style={{flexDirection: 'row'}}>
               <Icon name="place" size={22} color={COLORS.white} />
               <Text style={{color: COLORS.white, marginLeft: 5}}>
-                {place.location}
+                {place.localisation}
               </Text>
             </View>
             <View style={{flexDirection: 'row'}}>
@@ -105,7 +124,7 @@ const Travel = ({navigation}) => {
             </View>
           </View>
           <Text style={{color: COLORS.white, fontSize: 13}}>
-            {place.details}
+            {place.description}
           </Text>
         </View>
       </ImageBackground>
@@ -144,7 +163,7 @@ const Travel = ({navigation}) => {
             contentContainerStyle={{paddingLeft: 20}}
             horizontal
             showsHorizontalScrollIndicator={false}
-            data={Places}
+            data={data}
             renderItem={({item}) => <Card place={item} />}
           />
           <Text style={style.sectionTitle}>Recommended</Text>
@@ -153,7 +172,7 @@ const Travel = ({navigation}) => {
             contentContainerStyle={{paddingLeft: 20, paddingBottom: 20}}
             showsHorizontalScrollIndicator={false}
             horizontal
-            data={Places}
+            data={data}
             renderItem={({item}) => <RecommendedCard place={item} />}
           />
         </View>
