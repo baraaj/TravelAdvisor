@@ -55,7 +55,7 @@ export default function SignUp(props) {
                 
                 <TouchableOpacity onPress={()=>{
                     auth.createUserWithEmailAndPassword(email,password)
-                        .then(()=>{props.navigation.replace("Travel")})
+                        .then(()=>{props.navigation.replace("All")})
                         .catch((err)=>{
                             alert(err);
                         })

@@ -12,6 +12,7 @@ import Travel from './screens/Travel';
 import DetailsScreen from './screens/DetailsScreen';
 import Background from './screens/Background';
 import Authentification from './screens/Authentification';
+import Accueil from './screens/Accueil';
  
 const Stack = createNativeStackNavigator();
 
@@ -21,13 +22,13 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Travel" component={Travel} />
         <Stack.Screen name="DetailsScreen" component={DetailsScreen} />
         <Stack.Screen name="ItemScreen" component={ItemScreen} />
         <Stack.Screen name="Discover" component={Discover} />
         <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen name="Background" component={Background} />
         <Stack.Screen name="Auth" component={Authentification} />
+        <Stack.Screen name="All" component={Accueil} />
         
       </Stack.Navigator>
     </NavigationContainer>

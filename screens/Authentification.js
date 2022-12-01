@@ -38,7 +38,7 @@ export default function Authentification(props) {
         {
            auth.signInWithEmailAndPassword(email,password)
            .then(()=>{
-               props.navigation.replace("Travel");
+               props.navigation.replace("All");
            }).catch((erreur)=>{
                alert(erreur)
            });
