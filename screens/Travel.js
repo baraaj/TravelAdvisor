@@ -15,14 +15,24 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-
+import { Rating, AirbnbRating } from 'react-native-ratings';
 import COLORS from './../consts/colors';
 //import Places from './../consts/places';
+
+
 const {width} = Dimensions.get('screen');
 const database = initfirebase.database();
 const ref_places=database.ref("places");
+
 const Travel = ({navigation}) => {
   const [data,setdata]= useState([]);
+  const[rate,setRate]=useState(null);
+  const[maxRating,setmaxRating]=useState([1,2,3,4,5]);
+  const ratingCompleted=(rating)=>{
+ 
+  console.log("Rating is: " + rating)
+  
+}
     useEffect(() => {
       ref_places.on("value",(dataSnapshot)=>{
         let d = [];
@@ -84,8 +94,19 @@ const Travel = ({navigation}) => {
               </Text>
             </View>
             <View style={{flexDirection: 'row'}}>
-              <Icon name="star" size={20} color={COLORS.white} />
+             {/* <Icon name="star" size={20} color={COLORS.white} />
               <Text style={{marginLeft: 5, color: COLORS.white}}>5.0</Text>
+          */}
+              <Rating
+              showRating
+              ratingCount={5}
+             onPress={setRate(5)}
+              onFinishRating={ratingCompleted}
+              imageSize={20}
+              style={{ paddingVertical:10,alignItems:"center",marginLeft:-100,marginBottom:-10}}
+               
+            />  
+             
             </View>
           </View>
         </ImageBackground>
@@ -119,7 +140,7 @@ const Travel = ({navigation}) => {
               </Text>
             </View>
             <View style={{flexDirection: 'row'}}>
-              <Icon name="star" size={22} color={COLORS.white} />
+              <Icon name="star" size={22} color={COLORS.white}  />
               <Text style={{color: COLORS.white, marginLeft: 5}}>5.0</Text>
             </View>
           </View>

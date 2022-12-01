@@ -7,11 +7,14 @@ import {
   View,
   Text,
 } from 'react-native';
+
+
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import COLORS from './../consts/colors';
 
 const DetailsScreen = ({navigation, route}) => {
   const place = route.params;
+  
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
       <StatusBar translucent backgroundColor="rgba(0,0,0,0)" />
@@ -37,10 +40,10 @@ const DetailsScreen = ({navigation, route}) => {
             {place.name}
           </Text>
           <View style={{flexDirection: 'row'}}>
-            <Icon name="star" size={30} color={COLORS.orange} />
-            <Text
-              style={{color: COLORS.white, fontWeight: 'bold', fontSize: 20}}>
-              5.0
+            <Icon name="star" size={30} color={COLORS.orange}  />
+            
+            <Text style={{color: COLORS.white, fontWeight: 'bold', fontSize: 20}}>
+             
             </Text>
           </View>
         </View>

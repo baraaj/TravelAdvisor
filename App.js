@@ -13,6 +13,8 @@ import DetailsScreen from './screens/DetailsScreen';
 import Background from './screens/Background';
 import Authentification from './screens/Authentification';
 import Accueil from './screens/Accueil';
+import Ratings  from './screens/Ratings';
+
  
 const Stack = createNativeStackNavigator();
 
@@ -29,6 +31,7 @@ export default function App() {
         <Stack.Screen name="Background" component={Background} />
         <Stack.Screen name="Auth" component={Authentification} />
         <Stack.Screen name="All" component={Accueil} />
+        <Stack.Screen name="Ratings" component={Ratings} />
         
       </Stack.Navigator>
     </NavigationContainer>
