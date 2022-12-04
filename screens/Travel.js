@@ -186,7 +186,7 @@ const searchFilterFunction = (text) => {
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
       <StatusBar translucent={false} backgroundColor={COLORS.primary} />
       <View style={style.header}>
-        <TouchableOpacity  onPress={e=>{e.preventDefault(e),navigation.navigate("Profile")}}>
+        <TouchableOpacity  onPress={e=>{e.preventDefault(e),navigation.navigate("MyProfile")}}>
         <Icon name="sort" size={28} color={COLORS.white} />
         </TouchableOpacity>
         <Icon name="notifications-none" size={28} color={COLORS.white} />

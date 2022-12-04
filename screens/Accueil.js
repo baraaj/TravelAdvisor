@@ -14,12 +14,7 @@ export default function Accueil() {
      
   const Tab = createMaterialBottomTabNavigator();
   return (
-      /*  <View style={styles.container}>
-      <StatusBar style="light" />
-      <View>
-      <Text style={{color:"white",textAlign:"center",fontSize:38,fontWeight:"bold",marginBottom:10}}>Accueil</Text>
-      </View>
-  </View>*/
+      
   <Tab.Navigator inactiveBackgroundColor="#04555c" barStyle={{ backgroundColor: "#04555c" }}>
   <Tab.Screen  name="Travel" component={Travel} ></Tab.Screen>
   

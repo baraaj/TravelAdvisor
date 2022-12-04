@@ -12,6 +12,8 @@ import DetailsScreen from './screens/DetailsScreen';
 import Background from './screens/Background';
 import Authentification from './screens/Authentification';
 import Accueil from './screens/Accueil';
+import MyProfile from './screens/MyProfile';
+
 
 
  
@@ -30,7 +32,7 @@ export default function App() {
         <Stack.Screen name="Background" component={Background} />
         <Stack.Screen name="Auth" component={Authentification} />
         <Stack.Screen name="All" component={Accueil} />
-        
+        <Stack.Screen name="MyProfile" component={MyProfile} />
         
       </Stack.Navigator>
     </NavigationContainer>

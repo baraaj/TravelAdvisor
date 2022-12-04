@@ -96,7 +96,7 @@ const pickImage = async () => {
               pseudo: pseudo,
               url: url,
             });
-            navigation.navigate("list");
+            navigation.navigate("MyProfile",{nom,prenom,pseudo,url});
           } else {
             const url = await uploadImage(image);
             const ref_profils = database.ref("profils");
@@ -107,7 +107,7 @@ const pickImage = async () => {
               pseudo: pseudo,
               url: null,
             });
-            navigation.navigate("list");
+            navigation.navigate("MyProfile",{nom,prenom,pseudo,url});
           }
         }}
       >
