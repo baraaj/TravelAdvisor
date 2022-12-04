@@ -1,9 +1,7 @@
 import app from "firebase/compat/app";
 import  "firebase/compat/auth";
-//import initfirebase from './index';
 import "firebase/compat/database";
 import "firebase/compat/storage";
-import Authentification from '../screens/Authentification';
 import "firebase/compat/database";
 import "firebase/compat/storage";
 

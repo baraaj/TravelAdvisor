@@ -13,7 +13,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import COLORS from './../consts/colors';
 
 const DetailsScreen = ({navigation, route}) => {
-  const place = route.params;
+  const place = route.params.place;
+  const rate = route.params.rate;
   
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
@@ -43,7 +44,7 @@ const DetailsScreen = ({navigation, route}) => {
             <Icon name="star" size={30} color={COLORS.orange}  />
             
             <Text style={{color: COLORS.white, fontWeight: 'bold', fontSize: 20}}>
-             
+             {rate}
             </Text>
           </View>
         </View>

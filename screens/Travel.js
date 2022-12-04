@@ -18,7 +18,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Rating } from 'react-native-ratings';
 import COLORS from './../consts/colors';
 
-
+import { SearchBar } from 'react-native-elements';
 
 const {width} = Dimensions.get('screen');
 const database = initfirebase.database();
@@ -26,14 +26,42 @@ const ref_places=database.ref("places");
 
 const Travel = ({navigation}) => {
   const [data,setdata]= useState([]);
+  const [masterDataSource, setMasterDataSource] = useState([]);
+  const [filteredDataSource, setFilteredDataSource] = useState([]);
   const[rate,setRate]=useState(null);
-   
+  const [search, setSearch] = useState('');
   const ratingCompleted=(rating)=>{
  
   console.log("Rating is: " + rating)
   setRate(rating);
   
 }
+const searchFilterFunction = (text) => {
+  // Check if searched text is not blank
+  if (text) {
+    // Inserted text is not blank
+    // Filter the masterDataSource
+    // Update FilteredDataSource
+    const newData = data.filter(function (item) {
+      const itemData = item.name
+        ? item.name.toUpperCase()
+        : ''.toUpperCase();
+      const textData = text.toUpperCase();
+      return itemData.indexOf(textData) > -1;
+    });
+    setFilteredDataSource(newData);
+    //setdata(newData);
+    setSearch(text);
+  } else {
+    // Inserted text is blank
+    // Update FilteredDataSource with masterDataSource
+    setFilteredDataSource(data);
+    setSearch(text);
+  }
+};
+
+ 
+
     useEffect(() => {
       ref_places.on("value",(dataSnapshot)=>{
         let d = [];
@@ -41,6 +69,8 @@ const Travel = ({navigation}) => {
             d.push(place.val());
         });
         setdata(d);
+        setFilteredDataSource(d);
+        setMasterDataSource(d);
     })
       
       return () => {
@@ -70,7 +100,7 @@ const Travel = ({navigation}) => {
     return (
       <TouchableOpacity
         activeOpacity={0.8}
-        onPress={() => navigation.navigate('DetailsScreen', place)}>
+        onPress={() => navigation.navigate('DetailsScreen', {place,rate})}>
         <ImageBackground style={style.cardImage} source={place.url===null? require("../assets/location1.jpg") : {uri:place.url}}>
           <Text
             style={{
@@ -176,6 +206,8 @@ const Travel = ({navigation}) => {
               <TextInput
                 placeholder="Search place"
                 style={{color: COLORS.grey}}
+                onChangeText={(text) => searchFilterFunction(text)}
+          onClear={(text) => searchFilterFunction('')}
               />
             </View>
           </View>
@@ -187,7 +219,7 @@ const Travel = ({navigation}) => {
             contentContainerStyle={{paddingLeft: 20}}
             horizontal
             showsHorizontalScrollIndicator={false}
-            data={data}
+            data={filteredDataSource!==null?filteredDataSource:data}
             renderItem={({item}) => <Card place={item} />}
           />
           <Text style={style.sectionTitle}>Recommended</Text>

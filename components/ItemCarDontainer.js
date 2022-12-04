@@ -5,8 +5,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import HomeScreen from './../screens/HomeScreen';
-import Discover from './../screens/Discover';
-import ItemScreen from './../screens/ItemScreen';
+//import Discover from './../screens/Discover';
 import DetailsScreen from './../screens/DetailsScreen';
 import Travel from './../screens/Travel';
 
