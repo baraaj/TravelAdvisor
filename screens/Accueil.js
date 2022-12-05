@@ -10,16 +10,17 @@ import Experience from './Experience';
 import Travel from './Travel';
 import COLORS from './../consts/colors';
 
-export default function Accueil() {
-     
+export default function Accueil({route}) {
+     //const email=route.params.email;
   const Tab = createMaterialBottomTabNavigator();
+  
   return (
       
   <Tab.Navigator inactiveBackgroundColor="#04555c" barStyle={{ backgroundColor: "#04555c" }}>
   <Tab.Screen  name="Travel" component={Travel} ></Tab.Screen>
   
   <Tab.Screen name="Share" component={Experience}></Tab.Screen>
-  <Tab.Screen name="Profile"component={Profile} ></Tab.Screen>
+  <Tab.Screen name="Profile" component={Profile} ></Tab.Screen>
    
   </Tab.Navigator>
 )

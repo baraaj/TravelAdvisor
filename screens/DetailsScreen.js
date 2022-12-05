@@ -6,6 +6,7 @@ import {
   StyleSheet,
   View,
   Text,
+  TouchableOpacity,
 } from 'react-native';
 
 
@@ -78,7 +79,7 @@ const DetailsScreen = ({navigation, route}) => {
               fontWeight: 'bold',
               color: COLORS.white,
             }}>
-            $100
+            
           </Text>
           <Text
             style={{
@@ -87,14 +88,16 @@ const DetailsScreen = ({navigation, route}) => {
               color: COLORS.grey,
               marginLeft: 2,
             }}>
-            /PER DAY
+            To know more about the trip
           </Text>
         </View>
         <View style={style.bookNowBtn}>
+          <TouchableOpacity onPress={e=>{e.preventDefault(),navigation.navigate("Profile")}}>
           <Text
             style={{color: COLORS.primary, fontSize: 16, fontWeight: 'bold'}}>
-            Book Now
+           Let's Get In Touch
           </Text>
+          </TouchableOpacity>
         </View>
       </View>
     </SafeAreaView>

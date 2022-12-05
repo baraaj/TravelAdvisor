@@ -6,23 +6,47 @@ import {useState,useEffect} from 'react'
 import initfirebase from '../config/index';
 import * as ImagePicker from 'expo-image-picker';
 import Background from "./Background";
+import useAuth from "../hooks/useAuth";
 export default function MyProfile({ navigation,route}) {
-   // const nom = route.params.nom;
-    //const prenom = route.params.prenom;
-    //const url = route.params.url;
-    //const pseudo = route.params.pseudo;
-    //console.log(nom);
-    return (
+   //const nom = route?route.params.nom:"Baraa";
+   const { getUser,loading,getAllUsers } = useAuth();
+   
+     const [utilisateurs,setUsers]=useState([]);
+     const[data,setData]=useState([{}]);
+   // const [name,setName]=useState("Baraa");
+    //const [prenom,setPrenom]=useState("Jridi")
+    useEffect(() => {
+        //nom!==null?setName(nom):"Baraa";
+       // getUser();
+      // setPrenom(route.params.prenom!==undefined?route.params.prenom:"Jridi");
+       // setName(route.params.nom!==undefined?route.params.nom:"Baraa");
+      
+       const getUserBy= async () => {
+        const userone = await getUser();
+         const usersplus=await getAllUsers();
+        setData(userone[0]);
+        setUsers(usersplus);
+      };
+      getUserBy();
+      getAllUsers();
+       },[]);
+       console.log(utilisateurs);
+        
+        return (
         <SafeAreaView style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={styles.titleBar}>
+                    <TouchableOpacity onPress={e=>{e.preventDefault,navigation.navigate("All")}}>
                     <Ionicons name="ios-arrow-back" size={24} color="#52575D"></Ionicons>
+                    </TouchableOpacity>
                     <Ionicons name="md-more" size={24} color="#52575D"></Ionicons>
                 </View>
 
                 <View style={{ alignSelf: "center" }}>
                     <View style={styles.profileImage}>
-                        <Image source={require("../assets/profil.png")} style={styles.image} resizeMode="center"></Image>
+                     
+                    <Image source={ data.image===null? require("../assets/profil.png") : {uri:data.image}} style={styles.image} ></Image>
+                         
                     </View>
                     <View style={styles.dm}>
                         <MaterialIcons name="chat" size={18} color="#DFD8C8"></MaterialIcons>
@@ -34,8 +58,10 @@ export default function MyProfile({ navigation,route}) {
                 </View>
 
                 <View style={styles.infoContainer}>
-                    <Text style={[styles.text, { fontWeight: "200", fontSize: 36 }]}>Julie</Text>
-                    <Text style={[styles.text, { color: "#AEB5BC", fontSize: 14 }]}>Photographer</Text>
+                    <Text style={[styles.text, { fontWeight: "200", fontSize: 36 }]}>{data.displayName}</Text>
+                    <Text style={[styles.text, { color: "#AEB5BC", fontSize: 14 }]}>{data.age}</Text>
+                    <Text style={[styles.text, { color: "#AEB5BC", fontSize: 14 }]}>{data.job}</Text>
+                    <Text style={[styles.text, { color: "#AEB5BC", fontSize: 14 }]}>{data.phone}</Text>
                 </View>
 
                 <View style={styles.statsContainer}>
@@ -54,6 +80,7 @@ export default function MyProfile({ navigation,route}) {
                 </View>
 
                 <View style={{ marginTop: 32 }}>
+                    
                     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                         <View style={styles.mediaImageContainer}>
                             <Image source={require("../assets/profil.png")} style={styles.image} resizeMode="cover"></Image>

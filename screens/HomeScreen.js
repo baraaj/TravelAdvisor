@@ -59,7 +59,7 @@ import {
   
           <TouchableOpacity
             //onPress={() => navigation.navigate("Travel")}
-            onPress={() => navigation.navigate("Auth")}
+            onPress={() => navigation.navigate("Login")}
             className="absolute bottom-20 w-24 h-24 border-l-2 border-r-2 border-t-4 border-[#00BCC9] rounded-full items-center justify-center"
           >
             <Animatable.View

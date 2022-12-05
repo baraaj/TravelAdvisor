@@ -4,14 +4,24 @@ import {useState,useEffect} from 'react'
 import initfirebase from '../config/index';
 import * as ImagePicker from 'expo-image-picker';
 import Background from "./Background";
-export default function Profile({ navigation }) {
-    const database = initfirebase.database();
+import useAuth from "../hooks/useAuth";
+import { number } from "prop-types";
+export default function Profile({navigation }) {
+   const database = initfirebase.database();
     const [data,setdata]= useState([]);
     const storage = initfirebase.storage();
     const [nom, setNom] = useState("");
     const [prenom, setPrenom] = useState("");
     const [image, setImage] = useState(null);
     const [pseudo, setPseudo] = useState("");
+    const [displayName, setDisplayName] = useState("");
+  const [job, setJob] = useState("");
+  const [age, setAge] = useState("");
+  const [phone, setPhone] = useState("");
+  const { createProfile, loading } = useAuth();
+   
+    // const [mail,setMail]=useState(email);
+     
     //const [{nom,prenom,pseudo},setData] = useState({nom:"",prenom:"",pseudo:""});
     const imageToBlob = async (uri) => {
       const blob=await new Promise((resolve,reject)=>{
@@ -36,10 +46,11 @@ const uploadImage = async(uri)=>{
   const blob = await imageToBlob(uri);
   //save blob to ref image
   const ref_img = storage.ref().child("imageprofiles")
-      .child("image"+Math.random()*10000+".jpg");
+      .child("image"+user.uid+".jpg");
   await ref_img.put(blob)
   //get url
   const url = await ref_img.getDownloadURL();
+  setImage(url);
   return url;
 } ;
 const pickImage = async () => {
@@ -55,10 +66,10 @@ const pickImage = async () => {
 
   if (!result.canceled) {
        
-      setImage(result.uri);
+      setImage(result.assets[0].uri);
   }
 };
-
+ 
       
   return (
     <View style={styles.container}>
@@ -80,20 +91,23 @@ const pickImage = async () => {
       }}
      ></Image>
       </TouchableOpacity>
-      <TextInput placeholder="nom" onChangeText={e=>{setNom(e)}} style={styles.TextInput}></TextInput>
-      <TextInput placeholder="prenom" onChangeText={e=>{setPrenom(e)}} style={styles.TextInput}></TextInput>
-      <TextInput placeholder="pseudo" onChangeText={e=>{setPseudo(e)}} style={styles.TextInput}></TextInput>
+      <TextInput placeholder="nom" onChangeText={e=>{setDisplayName(e)}} style={styles.TextInput}></TextInput>
+      <TextInput placeholder="prenom" onChangeText={e=>{setJob(e)}} style={styles.TextInput}></TextInput>
+      <TextInput placeholder="Age" onChangeText={e=>{setAge(e)}} style={styles.TextInput}></TextInput>
+      <TextInput placeholder="phone" onChangeText={e=>{setPhone(e)}} style={styles.TextInput}></TextInput>
       <TouchableOpacity
         style={styles.button}
-        onPress={async () => {
+      /*  onPress={async () => {
           if (image != null) {
             const url = await uploadImage(image);
+
             const ref_profils = database.ref("profils");
             const key = ref_profils.push().key;
             ref_profils.child("profil" + key).set({
               nom: nom,
               prenom: prenom,
               pseudo: pseudo,
+              //mail:mail,
               url: url,
             });
             navigation.navigate("MyProfile",{nom,prenom,pseudo,url});
@@ -105,10 +119,19 @@ const pickImage = async () => {
               nom: nom,
               prenom: prenom,
               pseudo: pseudo,
+              mail:mail,
               url: null,
             });
             navigation.navigate("MyProfile",{nom,prenom,pseudo,url});
           }
+        }}*/
+        
+        onPress={  async () =>{
+          
+         await createProfile(displayName, job, age,phone,image);
+          
+            
+          
         }}
       >
         

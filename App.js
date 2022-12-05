@@ -1,4 +1,4 @@
-import { StatusBar } from "expo-status-bar";
+/*import { StatusBar } from "expo-status-bar";
 import { SafeAreaView, Text, View,StyleSheet } from "react-native";
 import { TailwindProvider } from "tailwindcss-react-native";
 import { NavigationContainer } from "@react-navigation/native";
@@ -13,6 +13,7 @@ import Background from './screens/Background';
 import Authentification from './screens/Authentification';
 import Accueil from './screens/Accueil';
 import MyProfile from './screens/MyProfile';
+import Chat from "./screens/Chat";
 
 
 
@@ -21,6 +22,7 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
+     
     <TailwindProvider>
     <NavigationContainer>
       <Stack.Navigator>
@@ -33,10 +35,11 @@ export default function App() {
         <Stack.Screen name="Auth" component={Authentification} />
         <Stack.Screen name="All" component={Accueil} />
         <Stack.Screen name="MyProfile" component={MyProfile} />
-        
+        <Stack.Screen name="Chat" component={Chat} />
       </Stack.Navigator>
     </NavigationContainer>
   </TailwindProvider>
+  
   );
 }
 
@@ -46,5 +49,36 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+});
+*/
+import { TailwindProvider } from "tailwindcss-react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { StyleSheet } from "react-native";
+import StackNavigator from "./components/StackNavigator";
+import { AuthProvider } from "./hooks/useAuth";
+import { Provider as PaperProvider } from "react-native-paper";
+import "./config/index";
+export default function App() {
+  return (
+    <NavigationContainer>
+      <TailwindProvider >
+        <PaperProvider>
+          {/* HOC */}
+          <AuthProvider>
+            <StackNavigator />
+          </AuthProvider>
+        </PaperProvider>
+      </TailwindProvider>
+    </NavigationContainer>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

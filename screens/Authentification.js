@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { useState } from 'react';
+import { useState ,useLayoutEffect} from 'react';
 import { StyleSheet, Text, View,TextInput } from 'react-native';
 import { Button } from 'react-native';
 import { TouchableOpacity } from 'react-native';
@@ -8,11 +8,15 @@ import Background from './Background';
 import SignUp from './SignUp';
 import Travel from './Travel';
 
-
-export default function Authentification(props) {
+import useAuth from "../hooks/useAuth";
+export default function Authentification({navigation}) {
     const[email,setEmail]=useState("jridibaraa@gmail.com");
     const[password,setPassword]=useState("123456");
-    const auth = initfirebase.auth();
+    const { login, loading } = useAuth()
+    //const auth = initfirebase.auth();
+    useLayoutEffect(() => {
+      navigation.setOptions({ headerShown: false });
+    }, []);
   return (
     <View style={styles.container}>
       <Background />
@@ -32,13 +36,13 @@ export default function Authentification(props) {
          justifyContent:"center",
          marginTop:10,
         
-      }}onPress={()=>{
+      }}/*onPress={()=>{
         if((email.length>0 && email.includes("@")))
         {if(password.length>5)
         {
            auth.signInWithEmailAndPassword(email,password)
            .then(()=>{
-               props.navigation.replace("All");
+               props.navigation.navigate("All",{email});
            }).catch((erreur)=>{
                alert(erreur)
            });
@@ -49,7 +53,7 @@ export default function Authentification(props) {
         }
   
   
-      }}>
+      }}*/  onPress={() => login(email, password)}>
       <Text style={{textAlign:"center",fontWeight:"bold",fontSize:18,color:'white'}}>Validate</Text>
  
       </TouchableOpacity>
@@ -60,7 +64,11 @@ export default function Authentification(props) {
         marginBottom:10,
         alignItems:"flex-end",
          
-      }} onPress={()=>{props.navigation.replace("SignUp")}}>
+      }} onPress={()=>{//props.navigation.replace("SignUp")
+        navigation.navigate("SignUp")
+      }
+
+      }>
         <Text style={{color:"white"}}>Create new User</Text>
 
       </TouchableOpacity>

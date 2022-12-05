@@ -1,17 +1,19 @@
 import { StatusBar } from 'expo-status-bar';
 import {Button, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
-import {useState} from "react";
+import {useState,useLayoutEffect} from "react";
 import initfirebase from './../config/index';
 import Background from './Background';
 
-
-export default function SignUp(props) {
-    const auth = initfirebase.auth()
+import useAuth from "../hooks/useAuth";
+export default function SignUp({navigation}) {
+    //const auth = initfirebase.auth()
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-   
-  
-   
+    const { register, loading } = useAuth();
+    const [confirmPassword, setConfirmPassword] = useState("");
+    useLayoutEffect(() => {
+        navigation.setOptions({ headerShown: false });
+      }, []);
     return (
        
         <View style={styles.container}>
@@ -51,15 +53,20 @@ export default function SignUp(props) {
                     style={styles.textinput}
                     placeholder="Repeat Password"
                     secureTextEntry={true}
+                    onChangeText={(text)=>setConfirmPassword(text)}
                 ></TextInput>
                 
-                <TouchableOpacity onPress={()=>{
-                    auth.createUserWithEmailAndPassword(email,password)
+                <TouchableOpacity /*onPress={()=>{
+                   auth.createUserWithEmailAndPassword(email,password)
                         .then(()=>{props.navigation.replace("All")})
                         .catch((err)=>{
                             alert(err);
-                        })
-                }} title="Create New Account" style={styles.button}>  
+                        }) }}*/
+                        onPress={async () => {
+                            await register(email, password, confirmPassword);
+                             
+                          }}
+                title="Create New Account" style={styles.button}>  
                 <Text style={{textAlign:"center",justifyContent:"center",color:"white",fontWeight:"bold",fontSize:18}}>Create New Account</Text>
                 </TouchableOpacity>
                 </View> 

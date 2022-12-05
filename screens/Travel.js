@@ -19,7 +19,7 @@ import { Rating } from 'react-native-ratings';
 import COLORS from './../consts/colors';
 
 import { SearchBar } from 'react-native-elements';
-
+import useAuth from "../hooks/useAuth";
 const {width} = Dimensions.get('screen');
 const database = initfirebase.database();
 const ref_places=database.ref("places");
@@ -29,6 +29,8 @@ const Travel = ({navigation}) => {
   const [masterDataSource, setMasterDataSource] = useState([]);
   const [filteredDataSource, setFilteredDataSource] = useState([]);
   const[rate,setRate]=useState(null);
+
+  const { logout, loading } = useAuth();
   const [search, setSearch] = useState('');
   const ratingCompleted=(rating)=>{
  
@@ -186,10 +188,13 @@ const searchFilterFunction = (text) => {
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
       <StatusBar translucent={false} backgroundColor={COLORS.primary} />
       <View style={style.header}>
-        <TouchableOpacity  onPress={e=>{e.preventDefault(e),navigation.navigate("MyProfile")}}>
+        <TouchableOpacity  onPress={e=>{e.preventDefault(e),navigation.navigate("MyProfile",{})}}>
         <Icon name="sort" size={28} color={COLORS.white} />
         </TouchableOpacity>
-        <Icon name="notifications-none" size={28} color={COLORS.white} />
+        <TouchableOpacity onPress={()=>logout()}>
+    { /*   <Icon name="notifications-none" size={28} color={COLORS.white} />*/}
+    <Icon name="logout"  type="AntDesign"size={28} color={COLORS.white} />
+        </TouchableOpacity>
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View
@@ -207,7 +212,7 @@ const searchFilterFunction = (text) => {
                 placeholder="Search place"
                 style={{color: COLORS.grey}}
                 onChangeText={(text) => searchFilterFunction(text)}
-          onClear={(text) => searchFilterFunction('')}
+                onClear={(text) => searchFilterFunction('')}
               />
             </View>
           </View>
