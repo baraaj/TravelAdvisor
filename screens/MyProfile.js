@@ -24,7 +24,7 @@ export default function MyProfile({ navigation,route}) {
       getUserBy();
       getAllUsers();
        },[]);
-       console.log(utilisateurs);
+      // console.log(utilisateurs);
         
         return (
         <SafeAreaView style={styles.container}>
@@ -58,7 +58,9 @@ export default function MyProfile({ navigation,route}) {
                 </View>
 
                 <View style={styles.infoContainer}>
+                    
                     <Text style={[styles.text, { fontWeight: "200", fontSize: 36 }]}>{data.displayName}</Text>
+                    <Text style={[styles.text, { color: "#AEB5BC", fontSize: 14 }]}>{data.email}</Text>
                     <Text style={[styles.text, { color: "#AEB5BC", fontSize: 14 }]}>{data.age}</Text>
                     <Text style={[styles.text, { color: "#AEB5BC", fontSize: 14 }]}>{data.job}</Text>
                     <Text style={[styles.text, { color: "#AEB5BC", fontSize: 14 }]}>{data.phone}</Text>

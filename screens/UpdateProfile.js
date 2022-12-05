@@ -18,7 +18,18 @@ export default function UpdateProfile({navigation }) {
   const [job, setJob] = useState("");
   const [age, setAge] = useState("");
   const [phone, setPhone] = useState("");
+  const[admin,setAdmin]=useState("");
+  const { getUser, auth,loading,updateProfil} = useAuth();
+  useEffect(() => {
+    const getUserBy= async () => {
+    const userone = await getUser();
+      
+    setAdmin(userone[0]);
+    
+  };
+  getUserBy();
    
+   },[]);
    
     // const [mail,setMail]=useState(email);
      
@@ -74,6 +85,8 @@ const pickImage = async () => {
   return (
     <View style={styles.container}>
         <Background />
+        <Text style={styles.titre2}>Welcome </Text>
+        <Text style={styles.titre2}>{admin.email}</Text>
       <Text style={styles.titre}>Update your Profile</Text>
       <TouchableOpacity onPress={pickImage}>
       <Image  source={ image === null ? require("../assets/profil.png") : {uri:image}}
@@ -91,8 +104,8 @@ const pickImage = async () => {
       }}
      ></Image>
       </TouchableOpacity>
-      <TextInput placeholder="nom" onChangeText={e=>{setDisplayName(e)}} style={styles.TextInput}></TextInput>
-      <TextInput placeholder="prenom" onChangeText={e=>{setJob(e)}} style={styles.TextInput}></TextInput>
+      <TextInput placeholder="Name" onChangeText={e=>{setDisplayName(e)}} style={styles.TextInput}></TextInput>
+      <TextInput placeholder="Job" onChangeText={e=>{setJob(e)}} style={styles.TextInput}></TextInput>
       <TextInput placeholder="Age" onChangeText={e=>{setAge(e)}} style={styles.TextInput}></TextInput>
       <TextInput placeholder="phone" onChangeText={e=>{setPhone(e)}} style={styles.TextInput}></TextInput>
       <TouchableOpacity
@@ -128,7 +141,7 @@ const pickImage = async () => {
         
         onPress={  async () =>{
           
-        // await createProfile(displayName, job, age,phone,image);
+        await updateProfil(displayName,image,job,age,phone);
           
             
           
@@ -173,6 +186,11 @@ const styles = StyleSheet.create({
       textAlign:"center",
       marginTop:100,
       marginBottom:40
+    },
+    titre2:{
+      fontSize:20,
+      textAlign:"center",
+      marginTop:15,
     },
     container:{
          flex:1,

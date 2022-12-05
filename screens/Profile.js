@@ -104,8 +104,8 @@ const pickImage = async () => {
       }}
      ></Image>
       </TouchableOpacity>
-      <TextInput placeholder="nom" onChangeText={e=>{setDisplayName(e)}} style={styles.TextInput}></TextInput>
-      <TextInput placeholder="prenom" onChangeText={e=>{setJob(e)}} style={styles.TextInput}></TextInput>
+      <TextInput placeholder="Name" onChangeText={e=>{setDisplayName(e)}} style={styles.TextInput}></TextInput>
+      <TextInput placeholder="Job" onChangeText={e=>{setJob(e)}} style={styles.TextInput}></TextInput>
       <TextInput placeholder="Age" onChangeText={e=>{setAge(e)}} style={styles.TextInput}></TextInput>
       <TextInput placeholder="phone" onChangeText={e=>{setPhone(e)}} style={styles.TextInput}></TextInput>
       <TouchableOpacity

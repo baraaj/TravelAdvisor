@@ -81,16 +81,17 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const updateProfil = async (displayName,job,image,age,phone) => {
-    if (!photoURL) alert("Please upload photo or enter a photo URL");
+  const updateProfil = async (displayName,image,job,age,phone) => {
+    if (!image) alert("Please upload photo or enter a photo URL");
     else {
       const updatedUser = {
         uid: user.uid,
         email: user.email,
-        displayName: user.displayName?user.displayName:auth.currentUser.displayName,
-        image: user.image?user.image:auth.currentUser.image,
-        job: user.job?user.image:auth.currentUser.image,
-        age: user.age?user.age:auth.currentUser.age,
+        displayName,
+        image,
+        job,
+        age,
+        phone,
       };
       setDoc(doc(firestore, "users", user.uid), updatedUser)
         .then(() => {
@@ -99,7 +100,7 @@ export const AuthProvider = ({ children }) => {
         })
         .catch((error) => {
           setUser(null);
-          navigation.navigate("Login");
+          navigation.navigate("MyProfile");
           alert(error);
         });
     }
