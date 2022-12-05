@@ -81,16 +81,16 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const updatePhoto = async (photoURL) => {
+  const updateProfil = async (displayName,job,image,age,phone) => {
     if (!photoURL) alert("Please upload photo or enter a photo URL");
     else {
       const updatedUser = {
         uid: user.uid,
         email: user.email,
-        displayName: user.job,
-        photoURL,
-        job: user.job,
-        age: user.age,
+        displayName: user.displayName?user.displayName:auth.currentUser.displayName,
+        image: user.image?user.image:auth.currentUser.image,
+        job: user.job?user.image:auth.currentUser.image,
+        age: user.age?user.age:auth.currentUser.age,
       };
       setDoc(doc(firestore, "users", user.uid), updatedUser)
         .then(() => {
@@ -203,7 +203,7 @@ export const AuthProvider = ({ children }) => {
         register,
         createProfile,
         getUser,
-        updatePhoto,
+        updateProfil,
         loading: false,
       }}
     >

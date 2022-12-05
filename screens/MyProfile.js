@@ -13,15 +13,9 @@ export default function MyProfile({ navigation,route}) {
    
      const [utilisateurs,setUsers]=useState([]);
      const[data,setData]=useState([{}]);
-   // const [name,setName]=useState("Baraa");
-    //const [prenom,setPrenom]=useState("Jridi")
+    
     useEffect(() => {
-        //nom!==null?setName(nom):"Baraa";
-       // getUser();
-      // setPrenom(route.params.prenom!==undefined?route.params.prenom:"Jridi");
-       // setName(route.params.nom!==undefined?route.params.nom:"Baraa");
-      
-       const getUserBy= async () => {
+        const getUserBy= async () => {
         const userone = await getUser();
          const usersplus=await getAllUsers();
         setData(userone[0]);
@@ -39,7 +33,9 @@ export default function MyProfile({ navigation,route}) {
                     <TouchableOpacity onPress={e=>{e.preventDefault,navigation.navigate("All")}}>
                     <Ionicons name="ios-arrow-back" size={24} color="#52575D"></Ionicons>
                     </TouchableOpacity>
+                    
                     <Ionicons name="md-more" size={24} color="#52575D"></Ionicons>
+                     
                 </View>
 
                 <View style={{ alignSelf: "center" }}>
@@ -52,9 +48,13 @@ export default function MyProfile({ navigation,route}) {
                         <MaterialIcons name="chat" size={18} color="#DFD8C8"></MaterialIcons>
                     </View>
                     <View style={styles.active}></View>
+                    
                     <View style={styles.add}>
+                    <TouchableOpacity onPress={e=>{e.preventDefault,navigation.navigate("Update")}}>
                         <Ionicons name="ios-add" size={48} color="#DFD8C8" style={{ marginTop: 6, marginLeft: 2 }}></Ionicons>
+                    </TouchableOpacity>
                     </View>
+
                 </View>
 
                 <View style={styles.infoContainer}>

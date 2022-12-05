@@ -15,6 +15,7 @@ import useAuth from "../hooks/useAuth";
 import Profile from './../screens/Profile';
 import Travel from './../screens/Travel';
 import Experience from './../screens/Experience';
+import UpdateProfile from './../screens/UpdateProfile';
 
 const Stack = createNativeStackNavigator();
 
@@ -36,13 +37,13 @@ const StackNavigator = () => {
         <Stack.Screen name="Background" component={Background} />
        
         <Stack.Screen name="All" component={Accueil} />
-
+        <Stack.Screen name="Update" component={UpdateProfile} />
         <Stack.Screen name="MyProfile" component={MyProfile} />
         <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="Travel" component={Travel} />
         
         <Stack.Screen name="Share" component={Experience} />
-
+       
         
              </Stack.Group>
         </>

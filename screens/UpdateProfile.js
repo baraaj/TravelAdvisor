@@ -6,7 +6,7 @@ import * as ImagePicker from 'expo-image-picker';
 import Background from "./Background";
 import useAuth from "../hooks/useAuth";
 import { number } from "prop-types";
-export default function Profile({navigation }) {
+export default function UpdateProfile({navigation }) {
    const database = initfirebase.database();
     const [data,setdata]= useState([]);
     const storage = initfirebase.storage();
@@ -18,19 +18,8 @@ export default function Profile({navigation }) {
   const [job, setJob] = useState("");
   const [age, setAge] = useState("");
   const [phone, setPhone] = useState("");
-  const[admin,setAdmin]=useState("");
-  const { getUser, auth,loading } = useAuth();
-  useEffect(() => {
-    const getUserBy= async () => {
-    const userone = await getUser();
-      
-    setAdmin(userone[0]);
-    
-  };
-  getUserBy();
    
-   },[]);
-    
+   
     // const [mail,setMail]=useState(email);
      
     //const [{nom,prenom,pseudo},setData] = useState({nom:"",prenom:"",pseudo:""});
@@ -85,9 +74,7 @@ const pickImage = async () => {
   return (
     <View style={styles.container}>
         <Background />
-        <Text style={styles.titre2}>Welcome</Text>
-        <Text style={styles.titre2}>{admin.email}</Text>
-      <Text style={styles.titre}>Save your Profile</Text>
+      <Text style={styles.titre}>Update your Profile</Text>
       <TouchableOpacity onPress={pickImage}>
       <Image  source={ image === null ? require("../assets/profil.png") : {uri:image}}
       style={{
@@ -141,7 +128,7 @@ const pickImage = async () => {
         
         onPress={  async () =>{
           
-         await createProfile(displayName, job, age,phone,image);
+        // await createProfile(displayName, job, age,phone,image);
           
             
           
@@ -184,13 +171,8 @@ const styles = StyleSheet.create({
        fontStyle:'italic',
        color:"#385F71",
       textAlign:"center",
-      marginTop:60,
-      marginBottom:20
-    },
-    titre2:{
-      fontSize:20,
-      textAlign:"center",
-      marginTop:15,
+      marginTop:100,
+      marginBottom:40
     },
     container:{
          flex:1,
