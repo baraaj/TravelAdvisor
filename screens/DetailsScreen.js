@@ -20,7 +20,7 @@ const DetailsScreen = ({navigation, route}) => {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
       <StatusBar translucent backgroundColor="rgba(0,0,0,0)" />
-      <ImageBackground style={{flex: 0.7}} source={place.url===null? require("../assets/location1.jpg") : {uri:place.url}}>
+      <ImageBackground style={{flex: 0.7}} source={place.url===null? require("../assets/location1.jpg") : {uri:place.url||place.image}}>
         <View style={style.header}>
           <Icon
             name="arrow-back-ios"

@@ -25,7 +25,7 @@ const MyPosts = ({navigation}) => {
   const [data,setdata]= useState([]);
   const [masterDataSource, setMasterDataSource] = useState([]);
   const [filteredDataSource, setFilteredDataSource] = useState([]);
-  const { logout, loading ,getPostsByUser} = useAuth();
+  const { logout, loading ,getPostsByUser,deletePost} = useAuth();
   const [search, setSearch] = useState('');
   const searchFilterFunction = (text) => {
     // Check if searched text is not blank
@@ -54,7 +54,7 @@ const MyPosts = ({navigation}) => {
       const getPosts= async () => {
       
        const usersposts=await getPostsByUser();
-        setdata(usersposts);
+         setdata(usersposts);
          setFilteredDataSource(usersposts);
         setMasterDataSource(usersposts);
       
@@ -82,11 +82,15 @@ const MyPosts = ({navigation}) => {
   };
 
   const Card = ({place}) => {
+   
     return (
       <TouchableOpacity
         activeOpacity={0.8}
         onPress={() => navigation.navigate('DetailsScreen', {place})}>
         <ImageBackground style={style.cardImage} source={place.url===null? require("../assets/location1.jpg") : {uri:place.image}}>
+        <TouchableOpacity onPress={e=>{e.preventDefault,deletePost(place.idpost),navigation.navigate("MyPosts")}}>
+        <Icon name="delete"  type="AntDesign"size={28}  />
+        </TouchableOpacity >
           <Text
             style={{
               color: COLORS.white,
@@ -156,6 +160,7 @@ const MyPosts = ({navigation}) => {
         </View>
         <ListCategories />
         <Text style={style.sectionTitle}>Places</Text>
+        
         <View>
           <FlatList
             contentContainerStyle={{paddingLeft: 20}}

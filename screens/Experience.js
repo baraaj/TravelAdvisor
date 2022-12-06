@@ -20,8 +20,9 @@ export default function Experience({ navigation }) {
     const [description, setDesc] = useState("");
     const [useri,setUseri]=useState(null);
     const [id,setId]=useState(null);
-     
-    
+    let idd=Math.random()*Math.pow(10,17);
+   let idp=idd.toString();
+   
     useEffect(() => {
         const getUserBy= async () => {
         const userone = await getUser();
@@ -156,8 +157,8 @@ const pickImage = async () => {
           }
         }}*/
         onPress={  async () =>{
-          
-          await createPost(name,localisation,description,image,id);
+         // console.log(idp)
+          await createPost(name,localisation,description,image,id,idp);
            
              
            

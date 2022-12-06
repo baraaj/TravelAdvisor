@@ -20,6 +20,7 @@ import {
   getDocs,
   onSnapshot,
   getDoc,
+  deleteDoc,
 } from "firebase/firestore";
 import { useGenerateId } from "./useGeneratedId";
 
@@ -144,9 +145,10 @@ export const AuthProvider = ({ children }) => {
         });
     }
   };
-  const createPost = async (name,localisation,description,image,id) => {
-    let idd=Math.random()*1000;
-     
+  const createPost = async (name,localisation,description,image,id,idp) => {
+   
+    
+    // let idp=idd.toString();
     if (!name) alert(" name is required !");
     else if (!localisation) alert("Localisation is required !");
     else if (!description) alert("Description is required !");
@@ -159,16 +161,18 @@ export const AuthProvider = ({ children }) => {
         localisation,
         description,
         image,
+        idpost:idp,
        
       };
      
-      setDoc(doc(firestore,"posts",idd.toString()), {
-         
+      setDoc(doc(firestore,"posts",idp), {
+        
         iduser:id,
         name,
         localisation,
         description,
         image,
+        idpost:idp,
        
       })
         .then(() => {
@@ -220,6 +224,11 @@ export const AuthProvider = ({ children }) => {
     });
     return array;
   };
+  const deletePost=async(idpost)=>{
+     
+    await deleteDoc(doc(firestore,"posts",idpost ));
+    alert('deleted successfully')
+  }
   const getAllDissc = async () => {
     const q = query(
       collection(firestore, "message"),
@@ -287,6 +296,7 @@ export const AuthProvider = ({ children }) => {
         createPost,
         getAllPosts,
         getPostsByUser,
+        deletePost,
         loading: false,
       }}
     >
