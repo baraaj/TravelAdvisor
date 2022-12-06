@@ -25,14 +25,15 @@ export default function MyProfile({ navigation}) {
       getUserBy();
       getAllUsers();
        },[]);
+      
       // console.log(utilisateurs);
       const Card = ({userr}) => {
         return (
           <TouchableOpacity
-            activeOpacity={0.8} 
+            activeOpacity={0.8} onPress={e=>{e.preventDefault,navigation.navigate("Chat",{userr})}}
             >
             <ImageBackground style={{height:150,width:150, borderRadius:60,borderWidth: 4,
-          borderColor: "white"}}source={userr.image===null? require("../assets/location1.jpg") : {uri:userr.image}}>
+                borderColor: "white"}}source={userr.image===null? require("../assets/location1.jpg") : {uri:userr.image}}>
               <Text
                 style={{
                   color: COLORS.white,
@@ -50,8 +51,8 @@ export default function MyProfile({ navigation}) {
                   alignItems: 'flex-end',
                 }}>
                 <View style={{flexDirection: 'row'}}>
-                  <Text style={{marginLeft: 5, color: COLORS.white}}>
-                    {}
+                  <Text style={{alignSelf:"center",fontSize:15, color: COLORS.orange}}>
+                    {userr.displayName}
                   </Text>
                 </View>
                 <View style={{flexDirection: 'row'}}>

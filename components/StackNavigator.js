@@ -17,6 +17,8 @@ import Travel from './../screens/Travel';
 import Experience from './../screens/Experience';
 import UpdateProfile from './../screens/UpdateProfile';
 import MyPosts from './../screens/MyPosts';
+import Chat from "../screens/Chat";
+import ChatList from "./ChatList";
 const Stack = createNativeStackNavigator();
 
 const StackNavigator = () => {
@@ -42,7 +44,7 @@ const StackNavigator = () => {
         <Stack.Screen name="MyProfile" component={MyProfile} />
         <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="Travel" component={Travel} />
-        
+        <Stack.Screen name="Chat" component={Chat} />
         <Stack.Screen name="Share" component={Experience} />
        
         

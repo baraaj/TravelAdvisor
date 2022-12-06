@@ -220,6 +220,19 @@ export const AuthProvider = ({ children }) => {
     });
     return array;
   };
+  const getAllDissc = async () => {
+    const q = query(
+      collection(firestore, "message"),
+      where("uid", "!=", user.uid)
+    );
+    const array = [];
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      //console.log(doc.data());
+      doc.data() && array.push(doc.data());
+    });
+    return array;
+  };
   const getPostsByUser = async () => {
     const q = query(
       collection(firestore, "posts"),
