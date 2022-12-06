@@ -1,12 +1,14 @@
 import {View, Text, Button,TextInput, TouchableOpacity, StyleSheet, Image} from "react-native";
 import React from "react";
-import { SafeAreaView, ScrollView } from "react-native";
+import { SafeAreaView, ScrollView, FlatList,  ImageBackground } from "react-native";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import {useState,useEffect} from 'react'
 import initfirebase from '../config/index';
 import * as ImagePicker from 'expo-image-picker';
 import Background from "./Background";
 import useAuth from "../hooks/useAuth";
+import COLORS from './../consts/colors';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 export default function MyProfile({ navigation,route}) {
    //const nom = route?route.params.nom:"Baraa";
    const { getUser,loading,getAllUsers } = useAuth();
@@ -25,7 +27,43 @@ export default function MyProfile({ navigation,route}) {
       getAllUsers();
        },[]);
       // console.log(utilisateurs);
-        
+      const Card = ({userr}) => {
+        return (
+          <TouchableOpacity
+            activeOpacity={0.8} 
+            >
+            <ImageBackground style={{height:150,width:150, borderRadius:60,borderWidth: 4,
+          borderColor: "white"}}source={userr.image===null? require("../assets/location1.jpg") : {uri:userr.image}}>
+              <Text
+                style={{
+                  color: COLORS.white,
+                  fontSize: 20,
+                  fontWeight: 'bold',
+                  marginTop: 10,
+                }}>
+                {userr.age}
+              </Text>
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: 'space-between',
+                  flexDirection: 'row',
+                  alignItems: 'flex-end',
+                }}>
+                <View style={{flexDirection: 'row'}}>
+                  <Text style={{marginLeft: 5, color: COLORS.white}}>
+                    {}
+                  </Text>
+                </View>
+                <View style={{flexDirection: 'row'}}>
+             
+                 
+                </View>
+              </View>
+            </ImageBackground>
+          </TouchableOpacity>
+        );
+      };
         return (
         <SafeAreaView style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
@@ -34,7 +72,7 @@ export default function MyProfile({ navigation,route}) {
                     <Ionicons name="ios-arrow-back" size={24} color="#52575D"></Ionicons>
                     </TouchableOpacity>
                     
-                    <Ionicons name="md-more" size={24} color="#52575D"></Ionicons>
+                    
                      
                 </View>
 
@@ -84,18 +122,17 @@ export default function MyProfile({ navigation,route}) {
                 <View style={{ marginTop: 32 }}>
                     
                     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                        <View style={styles.mediaImageContainer}>
-                            <Image source={require("../assets/profil.png")} style={styles.image} resizeMode="cover"></Image>
-                        </View>
-                        <View style={styles.mediaImageContainer}>
-                            <Image source={require("../assets/profil.png")} style={styles.image} resizeMode="cover"></Image>
-                        </View>
-                        <View style={styles.mediaImageContainer}>
-                            <Image source={require("../assets/profil.png")} style={styles.image} resizeMode="cover"></Image>
-                        </View>
+
+        <FlatList
+            contentContainerStyle={{paddingLeft: 20}}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            data={utilisateurs}
+            renderItem={({item}) => <Card userr={item} />}
+          />
                     </ScrollView>
                     <View style={styles.mediaCount}>
-                        <Text style={[styles.text, { fontSize: 24, color: "#DFD8C8", fontWeight: "300" }]}>70</Text>
+                        <Text style={[styles.text, { fontSize: 24, color: "#DFD8C8", fontWeight: "300" }]}>{utilisateurs.length}</Text>
                         <Text style={[styles.text, { fontSize: 12, color: "#DFD8C8", textTransform: "uppercase" }]}>Media</Text>
                     </View>
                 </View>

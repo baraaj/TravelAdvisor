@@ -25,18 +25,18 @@ const StackNavigator = () => {
   return (
     <Stack.Navigator defaultScreenOptions={{ headerShown: false }}>
    
-       <Stack.Screen name="Home" component={HomeScreen} /> 
+      
       {user ? (
         <>
           <Stack.Group>
-          
+          <Stack.Screen name="All" component={Accueil} />
         <Stack.Screen name="DetailsScreen" component={DetailsScreen} />
          
         <Stack.Screen name="Discover" component={Discover} />
         
         <Stack.Screen name="Background" component={Background} />
        
-        <Stack.Screen name="All" component={Accueil} />
+        
         <Stack.Screen name="Update" component={UpdateProfile} />
         <Stack.Screen name="MyProfile" component={MyProfile} />
         <Stack.Screen name="Profile" component={Profile} />
@@ -50,7 +50,7 @@ const StackNavigator = () => {
       ) : (
         <>
           <Stack.Group>
-          
+          <Stack.Screen name="Home" component={HomeScreen} /> 
           <Stack.Screen name="Login" component={Authentification} />
             <Stack.Screen name="SignUp" component={SignUp} />
           </Stack.Group>
