@@ -44,7 +44,7 @@ const StackNavigator = () => {
         <Stack.Screen name="MyProfile" component={MyProfile} />
         <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="Travel" component={Travel} />
-        <Stack.Screen name="Chat" component={Chat} />
+        <Stack.Screen name="Chat" component={Chatr} />
         <Stack.Screen name="Share" component={Experience} />
        
         
