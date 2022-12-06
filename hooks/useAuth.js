@@ -30,6 +30,7 @@ const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [post, setPost] = useState(null);
   const navigation = useNavigation();
 
   
@@ -143,6 +144,44 @@ export const AuthProvider = ({ children }) => {
         });
     }
   };
+  const createPost = async (name,localisation,description,image,id) => {
+    let idd=Math.random()*1000;
+     
+    if (!name) alert(" name is required !");
+    else if (!localisation) alert("Localisation is required !");
+    else if (!description) alert("Description is required !");
+    else if (!image) alert("Please upload photo or enter a photo URL");
+    else {
+      const updatedPost = {
+        
+        iduser:id,
+        name,
+        localisation,
+        description,
+        image,
+       
+      };
+     
+      setDoc(doc(firestore,"posts",idd.toString()), {
+         
+        iduser:id,
+        name,
+        localisation,
+        description,
+        image,
+       
+      })
+        .then(() => {
+          setPost(updatedPost);
+          navigation.navigate("Travel");
+        })
+        .catch((error) => {
+          setPost(null);
+          navigation.navigate("All");
+          alert(error);
+        });
+    }
+  };
 
   const logout = async () => {
     await signOut(auth)
@@ -163,11 +202,38 @@ export const AuthProvider = ({ children }) => {
     const array = [];
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
-      console.log(doc.data());
+      //console.log(doc.data());
       doc.data() && array.push(doc.data());
     });
     return array;
   };
+  const getAllPosts = async () => {
+    const q = query(
+      collection(firestore, "posts"),
+      where("iduser", "!=", user.uid)
+    );
+    const array = [];
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+     // console.log(doc.data());
+      doc.data() && array.push(doc.data());
+    });
+    return array;
+  };
+  const getPostsByUser = async () => {
+    const q = query(
+      collection(firestore, "posts"),
+      where("iduser", "==", user.uid)
+    );
+    const array = [];
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+     // console.log(doc.data());
+      doc.data() && array.push(doc.data());
+    });
+    return array;
+  };
+  
   const getUser = async () => {
     const array=[];
    // console.log(auth.currentUser.uid);
@@ -205,6 +271,9 @@ export const AuthProvider = ({ children }) => {
         createProfile,
         getUser,
         updateProfil,
+        createPost,
+        getAllPosts,
+        getPostsByUser,
         loading: false,
       }}
     >

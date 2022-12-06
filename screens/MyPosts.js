@@ -15,88 +15,59 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { Rating } from 'react-native-ratings';
 import COLORS from './../consts/colors';
-
-import { SearchBar } from 'react-native-elements';
 import useAuth from "../hooks/useAuth";
 const {width} = Dimensions.get('screen');
 const database = initfirebase.database();
 const ref_places=database.ref("places");
 
-const Travel = ({navigation}) => {
+const MyPosts = ({navigation}) => {
   const [data,setdata]= useState([]);
   const [masterDataSource, setMasterDataSource] = useState([]);
   const [filteredDataSource, setFilteredDataSource] = useState([]);
-  const[rate,setRate]=useState(null);
-
-  const { logout, loading ,getAllPosts} = useAuth();
+  const { logout, loading ,getPostsByUser} = useAuth();
   const [search, setSearch] = useState('');
-  const ratingCompleted=(rating)=>{
-  //console.log("Rating is: " + rating)
-  setRate(rating);
-  
-}
-const searchFilterFunction = (text) => {
-  // Check if searched text is not blank
-  if (text) {
-    // Inserted text is not blank
-    // Filter the masterDataSource
-    // Update FilteredDataSource
-    const newData = data.filter(function (item) {
-      const itemData = item.name
-        ? item.name.toUpperCase()
-        : ''.toUpperCase();
-      const textData = text.toUpperCase();
-      return itemData.indexOf(textData) > -1;
-    });
-    setFilteredDataSource(newData);
-    //setdata(newData);
-    setSearch(text);
-  } else {
-    // Inserted text is blank
-    // Update FilteredDataSource with masterDataSource
-    setFilteredDataSource(data);
-    setSearch(text);
-  }
-};
-
- 
-
-   /* useEffect(() => {
-      ref_places.on("value",(dataSnapshot)=>{
-        let d = [];
-        dataSnapshot.forEach((place)=>{
-            d.push(place.val());
-        });
-        setdata(d);
-        setFilteredDataSource(d);
-        setMasterDataSource(d);
-    })
-      
-      return () => {
-        ref_places.off();
-      };
-    }, []); */
+  const searchFilterFunction = (text) => {
+    // Check if searched text is not blank
+    if (text) {
+      // Inserted text is not blank
+      // Filter the masterDataSource
+      // Update FilteredDataSource
+      const newData = data.filter(function (item) {
+        const itemData = item.name
+          ? item.name.toUpperCase()
+          : ''.toUpperCase();
+        const textData = text.toUpperCase();
+        return itemData.indexOf(textData) > -1;
+      });
+      setFilteredDataSource(newData);
+      //setdata(newData);
+      setSearch(text);
+    } else {
+      // Inserted text is blank
+      // Update FilteredDataSource with masterDataSource
+      setFilteredDataSource(data);
+      setSearch(text);
+    }
+  };
     useEffect(() => {
       const getPosts= async () => {
       
-       const usersposts=await getAllPosts();
-      setdata(usersposts);
-      setFilteredDataSource(usersposts);
+       const usersposts=await getPostsByUser();
+        setdata(usersposts);
+         setFilteredDataSource(usersposts);
         setMasterDataSource(usersposts);
       
     };
      
     getPosts();
-     },[data]);
-     
-  const categoryIcons = [
-    <Icon name="flight" size={25} color={COLORS.primary} />,
-    <Icon name="beach-access" size={25} color={COLORS.primary} />,
-    <Icon name="near-me" size={25} color={COLORS.primary} />,
-    <Icon name="place" size={25} color={COLORS.primary} />,
-  ];
+     },[]);
+     const categoryIcons = [
+        <Icon name="flight" size={25} color={COLORS.primary} />,
+        <Icon name="beach-access" size={25} color={COLORS.primary} />,
+        <Icon name="near-me" size={25} color={COLORS.primary} />,
+        <Icon name="place" size={25} color={COLORS.primary} />,
+      ];
   const ListCategories = () => {
     
     return (
@@ -114,7 +85,7 @@ const searchFilterFunction = (text) => {
     return (
       <TouchableOpacity
         activeOpacity={0.8}
-        onPress={() => navigation.navigate('DetailsScreen', {place,rate})}>
+        onPress={() => navigation.navigate('DetailsScreen', {place})}>
         <ImageBackground style={style.cardImage} source={place.url===null? require("../assets/location1.jpg") : {uri:place.image}}>
           <Text
             style={{
@@ -139,18 +110,8 @@ const searchFilterFunction = (text) => {
               </Text>
             </View>
             <View style={{flexDirection: 'row'}}>
-             {/* <Icon name="star" size={20} color={COLORS.white} />
-              <Text style={{marginLeft: 5, color: COLORS.white}}>5.0</Text>
-          */}
-              <Rating
-              showRating
-              ratingCount={5}
-              
-              onFinishRating={ratingCompleted}
-              imageSize={20}
-              style={{ paddingVertical:10,alignItems:"center",marginLeft:-100,marginBottom:-10}}
+             
                
-            />  
              
             </View>
           </View>
@@ -159,43 +120,7 @@ const searchFilterFunction = (text) => {
     );
   };
 
-  const RecommendedCard = ({place}) => {
-    return (
-      <ImageBackground style={style.rmCardImage} source={place.url===null? require("../assets/location1.jpg") : {uri:place.image}}>
-        <Text
-          style={{
-            color: COLORS.white,
-            fontSize: 22,
-            fontWeight: 'bold',
-            marginTop: 10,
-          }}>
-          {place.name}
-        </Text>
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'space-between',
-            alignItems: 'flex-end',
-          }}>
-          <View style={{width: '100%', flexDirection: 'row', marginTop: 10}}>
-            <View style={{flexDirection: 'row'}}>
-              <Icon name="place" size={22} color={COLORS.white} />
-              <Text style={{color: COLORS.white, marginLeft: 5}}>
-                {place.localisation}
-              </Text>
-            </View>
-            <View style={{flexDirection: 'row'}}>
-              <Icon name="star" size={22} color={COLORS.white}  />
-              <Text style={{color: COLORS.white, marginLeft: 5}}>5.0</Text>
-            </View>
-          </View>
-          <Text style={{color: COLORS.white, fontSize: 13}}>
-            {place.description}
-          </Text>
-        </View>
-      </ImageBackground>
-    );
-  };
+  
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
       <StatusBar translucent={false} backgroundColor={COLORS.primary} />
@@ -235,19 +160,11 @@ const searchFilterFunction = (text) => {
           <FlatList
             contentContainerStyle={{paddingLeft: 20}}
             horizontal
-            showsHorizontalScrollIndicator={false}
+            showsHorizentalScrollIndicator={false}
             data={filteredDataSource!==null?filteredDataSource:data}
             renderItem={({item}) => <Card place={item} />}
           />
-          <Text style={style.sectionTitle}>Recommended</Text>
-          <FlatList
-            snapToInterval={width - 20}
-            contentContainerStyle={{paddingLeft: 20, paddingBottom: 20}}
-            showsHorizontalScrollIndicator={false}
-            horizontal
-            data={data}
-            renderItem={({item}) => <RecommendedCard place={item} />}
-          />
+          
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -316,4 +233,4 @@ const style = StyleSheet.create({
     padding: 10,
   },
 });
-export default Travel;
+export default MyPosts;

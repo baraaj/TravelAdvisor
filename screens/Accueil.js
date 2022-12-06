@@ -9,6 +9,7 @@ import Profile from './Profile';
 import Experience from './Experience';
 import Travel from './Travel';
 import COLORS from './../consts/colors';
+import MyPosts from './MyPosts';
 
 export default function Accueil({route}) {
      //const email=route.params.email;
@@ -20,7 +21,7 @@ export default function Accueil({route}) {
   <Tab.Screen  name="Travel" component={Travel} ></Tab.Screen>
   
   <Tab.Screen name="Share" component={Experience}></Tab.Screen>
-  <Tab.Screen name="Profile" component={Profile} ></Tab.Screen>
+  <Tab.Screen name="MyPosts" component={MyPosts} ></Tab.Screen>
    
   </Tab.Navigator>
 )

@@ -9,8 +9,7 @@ import Background from "./Background";
 import useAuth from "../hooks/useAuth";
 import COLORS from './../consts/colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-export default function MyProfile({ navigation,route}) {
-   //const nom = route?route.params.nom:"Baraa";
+export default function MyProfile({ navigation}) {
    const { getUser,loading,getAllUsers } = useAuth();
    
      const [utilisateurs,setUsers]=useState([]);
@@ -122,7 +121,7 @@ export default function MyProfile({ navigation,route}) {
                 <View style={{ marginTop: 32 }}>
                     
                     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-
+          
         <FlatList
             contentContainerStyle={{paddingLeft: 20}}
             horizontal

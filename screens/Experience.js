@@ -4,7 +4,13 @@ import {useState,useEffect} from 'react'
 import initfirebase from '../config/index';
 import * as ImagePicker from 'expo-image-picker';
 import Background from "./Background";
+import useAuth from "../hooks/useAuth";
+
 export default function Experience({ navigation }) {
+  const { getUser } = useAuth();
+   
+     const [utilisateurs,setUsers]=useState([]);
+  const { createPost,loading,auth } = useAuth();
     const database = initfirebase.database();
     const [data,setdata]= useState([]);
     const storage = initfirebase.storage();
@@ -12,7 +18,22 @@ export default function Experience({ navigation }) {
     const [localisation, setLocal] = useState("");
     const [image, setImage] = useState(null);
     const [description, setDesc] = useState("");
-    const [nblike,setNb]=useState(null);
+    const [useri,setUseri]=useState(null);
+    const [id,setId]=useState(null);
+     
+    
+    useEffect(() => {
+        const getUserBy= async () => {
+        const userone = await getUser();
+         
+        setUseri(userone[0]);
+         setId(userone[0].uid);
+      };
+      getUserBy();
+      
+       },[]);
+        
+       
     //const [{nom,prenom,pseudo},setData] = useState({nom:"",prenom:"",pseudo:""});
     const imageToBlob = async (uri) => {
       const blob=await new Promise((resolve,reject)=>{
@@ -30,7 +51,7 @@ export default function Experience({ navigation }) {
       });
   return blob;
 }
-
+/*
 
 const uploadImage = async(uri)=>{
   //convert image to blob
@@ -42,6 +63,18 @@ const uploadImage = async(uri)=>{
   //get url
   const url = await ref_img.getDownloadURL();
   return url;
+} ;*/
+const uploadImage = async(uri)=>{
+  //convert image to blob
+  const blob = await imageToBlob(uri);
+  //save blob to ref image
+  const ref_img = storage.ref().child("imageplaces")
+      .child("image"+Math.random()*10000+".jpg");
+  await ref_img.put(blob)
+  //get url
+  const url = await ref_img.getDownloadURL();
+  setImage(url);
+  return url;
 } ;
 const pickImage = async () => {
   // No permissions request is necessary for launching the image library
@@ -52,11 +85,11 @@ const pickImage = async () => {
       quality: 1,
   });
 
-  console.log(result);
+  //console.log(result);
 
   if (!result.canceled) {
        
-      setImage(result.uri);
+      setImage(result.assets[0].uri);
   }
 };
 
@@ -94,6 +127,7 @@ const pickImage = async () => {
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.button}
+        /*
         onPress={async () => {
           if (image != null) {
             const url = await uploadImage(image);
@@ -120,7 +154,14 @@ const pickImage = async () => {
             });
             navigation.navigate("Travel");
           }
-        }}
+        }}*/
+        onPress={  async () =>{
+          
+          await createPost(name,localisation,description,image,id);
+           
+             
+           
+         }}
       >
         
         <Text style={{textAlign:"center",fontWeight:"bold",fontSize:18,color:'white'}}>Add</Text>
