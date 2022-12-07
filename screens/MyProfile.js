@@ -2,14 +2,17 @@ import {View, Text, Button,TextInput, TouchableOpacity, StyleSheet, Image} from 
 import React from "react";
 import { SafeAreaView, ScrollView, FlatList,  ImageBackground } from "react-native";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
-import {useState,useEffect} from 'react'
+import {useState,useEffect,useLayoutEffect} from 'react'
 import initfirebase from '../config/index';
 import * as ImagePicker from 'expo-image-picker';
-import Background from "./Background";
+import Background from "../components/Background";
 import useAuth from "../hooks/useAuth";
 import COLORS from './../consts/colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 export default function MyProfile({ navigation}) {
+    useLayoutEffect(() => {
+        navigation.setOptions({ headerShown: false });
+      }, []);
    const { getUser,loading,getAllUsers } = useAuth();
    
      const [utilisateurs,setUsers]=useState([]);
@@ -30,7 +33,7 @@ export default function MyProfile({ navigation}) {
       const Card = ({userr}) => {
         return (
           <TouchableOpacity
-            activeOpacity={0.8} onPress={e=>{e.preventDefault,navigation.navigate("Chat",{userr})}}
+            activeOpacity={0.8} 
             >
             <ImageBackground style={{height:150,width:150, borderRadius:60,borderWidth: 4,
                 borderColor: "white"}}source={userr.image===null? require("../assets/location1.jpg") : {uri:userr.image}}>
@@ -83,7 +86,9 @@ export default function MyProfile({ navigation}) {
                          
                     </View>
                     <View style={styles.dm}>
+                        <TouchableOpacity onPress={e=>{e.preventDefault,navigation.navigate("Ask")}}>
                         <MaterialIcons name="chat" size={18} color="#DFD8C8"></MaterialIcons>
+                        </TouchableOpacity>
                     </View>
                     <View style={styles.active}></View>
                     
@@ -122,7 +127,7 @@ export default function MyProfile({ navigation}) {
                 <View style={{ marginTop: 32 }}>
                     
                     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-          
+          <ScrollView>
         <FlatList
             contentContainerStyle={{paddingLeft: 20}}
             horizontal
@@ -130,6 +135,7 @@ export default function MyProfile({ navigation}) {
             data={utilisateurs}
             renderItem={({item}) => <Card userr={item} />}
           />
+          </ScrollView>
                     </ScrollView>
                     <View style={styles.mediaCount}>
                         <Text style={[styles.text, { fontSize: 24, color: "#DFD8C8", fontWeight: "300" }]}>{utilisateurs.length}</Text>

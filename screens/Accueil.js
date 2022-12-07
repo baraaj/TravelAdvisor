@@ -10,19 +10,24 @@ import Experience from './Experience';
 import Travel from './Travel';
 import COLORS from './../consts/colors';
 import MyPosts from './MyPosts';
-
-export default function Accueil({route}) {
+import ChatScreen from './ChatScreen';
+import {useLayoutEffect} from "react";
+export default function Accueil({route,navigation}) {
+   useLayoutEffect(() => {
+        navigation.setOptions({ headerShown: false });
+      }, []);
      //const email=route.params.email;
   const Tab = createMaterialBottomTabNavigator();
   
   return (
       
-  <Tab.Navigator inactiveBackgroundColor="#04555c" barStyle={{ backgroundColor: "#04555c" }}>
+  <Tab.Navigator screenOptions={{ headerShown: false }} inactiveBackgroundColor="#04555c" barStyle={{ backgroundColor: "#04555c" }}>
+  
   <Tab.Screen  name="Travel" component={Travel} ></Tab.Screen>
   
   <Tab.Screen name="Share" component={Experience}></Tab.Screen>
   <Tab.Screen name="MyPosts" component={MyPosts} ></Tab.Screen>
-   
+  <Tab.Screen name="Ask" component={ChatScreen} options={{ tabBarBadge: 3 }} ></Tab.Screen>
   </Tab.Navigator>
 )
 }

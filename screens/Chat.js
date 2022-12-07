@@ -29,40 +29,58 @@ import initfirebase from '../config/index';
 import { useGenerateId } from '../hooks/useGeneratedId';
 import { requestFrame } from 'react-native-reanimated/lib/reanimated2/core';
   export default function Chat({route}) {
-    const idReceiver=route.params.userr.uid;
+   // const idReceiver=route.params.userr.uid;
    // const idDisc=useGenerateId(user.uid,idReceiver);
     
     console.log(requestFrame);
     const [input, setInput] = useState("");
-    const { getUser,user,auth,loading,updateProfil} = useAuth();
+    const { getUser,user,auth,loading,updateProfil,logout} = useAuth();
    // const { params } = useRoute();
    const firestore = getFirestore(initfirebase);
     const [messages, setMessages] = useState([]);
+    const [msg, setMsg] = useState([]);
     const navigation = useNavigation();
     const storage = initfirebase.storage();
     const database = initfirebase.database();
     const idDisc=useGenerateId(user.uid,idReceiver);
+   
     useEffect(() => {
-      const getMessage= async () => {
-       
-    };
+      const getMessages = () => {
+        return onSnapshot(
+          query(
+            collection(firestore, "Discussion"),
+            where("idm", "==", idDisc),
+            orderBy("timestamp", "desc")
+          ),
+          (querySnapshot) => {
+            const messages = querySnapshot.docs.map((doc) => ({
+              id: doc.id,
+              ...doc.data(),
+            }));
+            setMessages(messages);
+          }
+        );
+      };
+      const unsubscribe = getMessages();
+      return unsubscribe;
+    }, [firestore]);
+    console.log(messages);
+    const sendMessage = useCallback((message) => {
      
-    getMessage();
-     },[]);
-    const sendMessage = useCallback((messages) => {
-     
-        if (messages) {
+        if (message) {
             setMessages(previousMessages =>
-                GiftedChat.append(previousMessages, messages)
+                GiftedChat.append(previousMessages, message)
               );
-          addDoc(
-            collection(firestore,"Discussion",idDisc,"messages"),
+              
+          setDoc(doc(
+           firestore,"Discussion",idDisc),
             {
+              idm:idDisc,
               timestamp: serverTimestamp(),
               userId: user.uid,
               displayName: user.displayName,
               photoURL: user.image,
-              message: messages,
+              message: message,
               idReceiver:idReceiver,
             }
           );
@@ -71,31 +89,12 @@ import { requestFrame } from 'react-native-reanimated/lib/reanimated2/core';
         }
         ;
         }, []);
-        useEffect(() => {
-          const getMessages = () => {
-            return onSnapshot(
-              query(
-                collection(firestore, "Disccussion", idDisc, "messages"),
-                orderBy("timestamp", "desc")
-              ),
-              (querySnapshot) => {
-                const messages = querySnapshot.docs.map((doc) => ({
-                  id: doc.id,
-                  ...doc.data(),
-                }));
-                setMessages(messages);
-                 
-              }
-            );
-          };
-          const unsubscribe = getMessages();
-          return unsubscribe;
-        }, [firestore,idDisc]);
+     
 
     useLayoutEffect(() => {
         navigation.setOptions({
           headerRight: () => (
-            <TouchableOpacity
+            <TouchableOpacity onPress={e=>{e.preventDefault,logout()}}
               style={{
                 marginRight: 10
               }}

@@ -2,9 +2,8 @@ import { StatusBar } from 'expo-status-bar';
 import {Button, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import {useState,useLayoutEffect} from "react";
 import initfirebase from './../config/index';
-import Background from './Background';
-
 import useAuth from "../hooks/useAuth";
+import Background from './../components/Background';
 export default function SignUp({navigation}) {
     //const auth = initfirebase.auth()
     const [email, setEmail] = useState("");

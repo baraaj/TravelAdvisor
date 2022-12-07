@@ -3,9 +3,9 @@ import React from 'react'
 import {useState,useEffect} from 'react'
 import initfirebase from '../config/index';
 import * as ImagePicker from 'expo-image-picker';
-import Background from "./Background";
 import useAuth from "../hooks/useAuth";
 import { number } from "prop-types";
+import Background from './../components/Background';
 export default function UpdateProfile({navigation }) {
    const database = initfirebase.database();
     const [data,setdata]= useState([]);

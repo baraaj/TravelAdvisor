@@ -1,6 +1,7 @@
 import React from 'react';
 import {useState,useEffect} from 'react'
 import initfirebase from '../config/index';
+import COLORS from './../consts/colors';
 import {
   SafeAreaView,
   ScrollView,
@@ -14,13 +15,24 @@ import {
   Dimensions,
   TouchableOpacity,
 } from 'react-native';
+import {
+  getFirestore,
+  setDoc,
+  doc,
+  collection,
+  query,
+  where,
+  getDocs,
+  onSnapshot,
+  getDoc,
+  deleteDoc,
+} from "firebase/firestore";
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import COLORS from './../consts/colors';
 import useAuth from "../hooks/useAuth";
 const {width} = Dimensions.get('screen');
 const database = initfirebase.database();
+const firestore = getFirestore(initfirebase);
 const ref_places=database.ref("places");
-
 const MyPosts = ({navigation}) => {
   const [data,setdata]= useState([]);
   const [masterDataSource, setMasterDataSource] = useState([]);
@@ -61,7 +73,7 @@ const MyPosts = ({navigation}) => {
     };
      
     getPosts();
-     },[]);
+     },[firestore]);
      const categoryIcons = [
         <Icon name="flight" size={25} color={COLORS.primary} />,
         <Icon name="beach-access" size={25} color={COLORS.primary} />,
@@ -88,8 +100,8 @@ const MyPosts = ({navigation}) => {
         activeOpacity={0.8}
         onPress={() => navigation.navigate('DetailsScreen', {place})}>
         <ImageBackground style={style.cardImage} source={place.url===null? require("../assets/location1.jpg") : {uri:place.image}}>
-        <TouchableOpacity onPress={e=>{e.preventDefault,deletePost(place.idpost),navigation.navigate("MyPosts")}}>
-        <Icon name="delete"  type="AntDesign"size={28}  />
+        <TouchableOpacity onPress={e=>{e.preventDefault,deletePost(place.idpost)}}>
+        <Icon name="delete" color={COLORS.white} type="AntDesign"size={28}  />
         </TouchableOpacity >
           <Text
             style={{

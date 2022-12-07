@@ -4,11 +4,12 @@ import { StyleSheet, Text, View,TextInput } from 'react-native';
 import { Button } from 'react-native';
 import { TouchableOpacity } from 'react-native';
 import initfirebase from './../config/index';
-import Background from './Background';
+
 import SignUp from './SignUp';
 import Travel from './Travel';
 
 import useAuth from "../hooks/useAuth";
+import Background from './../components/Background';
 export default function Authentification({navigation}) {
     const[email,setEmail]=useState("jridibaraa@gmail.com");
     const[password,setPassword]=useState("123456");

@@ -227,7 +227,10 @@ export const AuthProvider = ({ children }) => {
   const deletePost=async(idpost)=>{
      
     await deleteDoc(doc(firestore,"posts",idpost ));
-    alert('deleted successfully')
+    
+    
+    alert('deleted successfully');
+    navigation.navigate("Travel");
   }
   const getAllDissc = async () => {
     const q = query(
@@ -266,7 +269,7 @@ export const AuthProvider = ({ children }) => {
     } 
     return array;
      
-    return user;
+    //return user;
      
   };
 
@@ -285,7 +288,7 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider
       value={{
         user: user,
-         
+        
         getAllUsers,
         logout,
         login,

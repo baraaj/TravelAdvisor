@@ -3,8 +3,8 @@ import React from 'react'
 import {useState,useEffect} from 'react'
 import initfirebase from '../config/index';
 import * as ImagePicker from 'expo-image-picker';
-import Background from "./Background";
 import useAuth from "../hooks/useAuth";
+import Background from './../components/Background';
 
 export default function Experience({ navigation }) {
   const { getUser } = useAuth();
