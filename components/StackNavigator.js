@@ -17,8 +17,10 @@ import Experience from './../screens/Experience';
 import UpdateProfile from './../screens/UpdateProfile';
 import MyPosts from './../screens/MyPosts';
 import Chat from "../screens/Chat";
+import Tab from "../screens/Tab";
 import Background from "./Background";
 import ChatScreen from './../screens/ChatScreen';
+ 
 
 const Stack = createNativeStackNavigator();
 
@@ -33,7 +35,7 @@ const StackNavigator = () => {
         <>
          
           <Stack.Group>
-          <Stack.Screen name="All" component={Accueil} />
+          <Stack.Screen name="All" component={Tab} />
         <Stack.Screen name="DetailsScreen" component={DetailsScreen} />
          
         <Stack.Screen name="Discover" component={Discover} />
