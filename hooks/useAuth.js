@@ -177,7 +177,7 @@ export const AuthProvider = ({ children }) => {
       })
         .then(() => {
           setPost(updatedPost);
-          navigation.navigate("Travel");
+          navigation.navigate("All");
         })
         .catch((error) => {
           setPost(null);
@@ -230,7 +230,7 @@ export const AuthProvider = ({ children }) => {
     
     
     alert('deleted successfully');
-    navigation.navigate("Travel");
+    navigation.navigate("All");
   }
   const getAllDissc = async () => {
     const q = query(

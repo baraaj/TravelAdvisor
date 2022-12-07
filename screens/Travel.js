@@ -89,7 +89,7 @@ const searchFilterFunction = (text) => {
     };
      
     getPosts();
-     },[data]);
+     },[]);
      
   const categoryIcons = [
     <Icon name="flight" size={25} color={COLORS.primary} />,
@@ -201,7 +201,7 @@ const searchFilterFunction = (text) => {
       <StatusBar translucent={false} backgroundColor={COLORS.primary} />
       <View style={style.header}>
         <TouchableOpacity  onPress={e=>{e.preventDefault(e),navigation.navigate("MyProfile")}}>
-        <Icon name="sort" size={28} color={COLORS.white} />
+        <Icon name="person" size={28} color={COLORS.white} />
         </TouchableOpacity>
         <TouchableOpacity onPress={()=>logout()}>
     { /*   <Icon name="notifications-none" size={28} color={COLORS.white} />*/}
