@@ -171,7 +171,7 @@ const MyPosts = ({navigation}) => {
           </View>
         </View>
         <ListCategories />
-        <Text style={style.sectionTitle}>Places</Text>
+        <Text style={style.sectionTitle}>My Posts</Text>
         
         <View>
           <FlatList
