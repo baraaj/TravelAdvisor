@@ -19,7 +19,7 @@ export default function Profile({navigation }) {
   const [age, setAge] = useState("");
   const [phone, setPhone] = useState("");
   const[admin,setAdmin]=useState("");
-  const { getUser, auth,loading } = useAuth();
+  const { getUser, auth,loading,createProfile } = useAuth();
   useEffect(() => {
     const getUserBy= async () => {
     const userone = await getUser();
@@ -52,18 +52,6 @@ export default function Profile({navigation }) {
 }
 
 
-const uploadImage = async(uri)=>{
-  //convert image to blob
-  const blob = await imageToBlob(uri);
-  //save blob to ref image
-  const ref_img = storage.ref().child("imageprofiles")
-      .child("image"+user.uid+".jpg");
-  await ref_img.put(blob)
-  //get url
-  const url = await ref_img.getDownloadURL();
-  setImage(url);
-  return url;
-} ;
 const pickImage = async () => {
   // No permissions request is necessary for launching the image library
   let result = await ImagePicker.launchImageLibraryAsync({
@@ -80,13 +68,26 @@ const pickImage = async () => {
       setImage(result.assets[0].uri);
   }
 };
+
+const uploadImage = async(uri)=>{
+  //convert image to blob
+  const blob = await imageToBlob(uri);
+  //save blob to ref image
+  const ref_img = storage.ref().child("imageprofiles")
+      .child("image"+user.uid+".jpg");
+  await ref_img.put(blob)
+  //get url
+  const url = await ref_img.getDownloadURL();
+  setImage(url);
+  return url;
+} ;
  
       
   return (
     <View style={styles.container}>
         <Background />
         <Text style={styles.titre2}>Welcome</Text>
-        <Text style={styles.titre2}>{admin.email}</Text>
+        <Text style={styles.titre2}></Text>
       <Text style={styles.titre}>Save your Profile</Text>
       <TouchableOpacity onPress={pickImage}>
       <Image  source={ image === null ? require("../assets/profil.png") : {uri:image}}

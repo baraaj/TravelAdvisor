@@ -110,6 +110,7 @@ const ChatScreen = ({ navigation }) => {
             messages={messages}
             showAvatarForEveryMessage={true}
             renderUsernameOnMessage={true} 
+            
             onSend={messages => onSend(messages)}
             user={{
                 uid:user.uid,

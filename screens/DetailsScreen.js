@@ -92,7 +92,7 @@ const DetailsScreen = ({navigation, route}) => {
           </Text>
         </View>
         <View style={style.bookNowBtn}>
-          <TouchableOpacity onPress={e=>{e.preventDefault(),navigation.navigate("Profile")}}>
+          <TouchableOpacity onPress={e=>{e.preventDefault(),navigation.navigate("Ask")}}>
           <Text
             style={{color: COLORS.primary, fontSize: 16, fontWeight: 'bold'}}>
            Let's Get In Touch

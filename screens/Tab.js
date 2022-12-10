@@ -122,7 +122,7 @@ export default function App() {
           }
         })}></Tab.Screen>
 
-        <Tab.Screen name={"Notifications"} component={ChatScreen} options={{
+        <Tab.Screen name={"Chat"} component={ChatScreen} options={{
           tabBarIcon: ({ focused }) => (
             <View style={{
               // centring Tab Button...
