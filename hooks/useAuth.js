@@ -177,7 +177,8 @@ export const AuthProvider = ({ children }) => {
       })
         .then(() => {
           setPost(updatedPost);
-          navigation.navigate("Travel");
+          alert("Add successfully")
+          navigation.navigate("All");
         })
         .catch((error) => {
           setPost(null);

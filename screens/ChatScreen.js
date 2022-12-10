@@ -113,6 +113,7 @@ const ChatScreen = ({ navigation }) => {
             
             onSend={messages => onSend(messages)}
             user={{
+              _id:user.uid,
                 uid:user.uid,
                 name:user.displayName,
                 avatar: user.image,

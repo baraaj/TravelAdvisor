@@ -1,6 +1,7 @@
 import {View, Text, Button,TextInput, TouchableOpacity, StyleSheet, Image} from "react-native";
 import React from "react";
 import { SafeAreaView, ScrollView, FlatList,  ImageBackground } from "react-native";
+import { Dialog } from 'react-native-paper';
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import {useState,useEffect,useLayoutEffect} from 'react'
 import initfirebase from '../config/index';
@@ -9,7 +10,10 @@ import Background from "../components/Background";
 import useAuth from "../hooks/useAuth";
 import COLORS from './../consts/colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { Avatar } from 'react-native-elements';
+
 export default function MyProfile({ navigation}) {
+    const [selectedUser, setSelectedUser] = useState({});
     useLayoutEffect(() => {
         navigation.setOptions({ headerShown: false });
       }, []);
@@ -17,6 +21,7 @@ export default function MyProfile({ navigation}) {
    
      const [utilisateurs,setUsers]=useState([]);
      const[data,setData]=useState([{}]);
+     const [visible,setVisible]=useState(false);
     
     useEffect(() => {
         const getUserBy= async () => {
@@ -33,11 +38,15 @@ export default function MyProfile({ navigation}) {
       const Card = ({userr}) => {
         return (
           <TouchableOpacity
-            activeOpacity={0.8} 
+            activeOpacity={0.8} onPress={() => {
+                setSelectedUser(userr);
+                setVisible(true);
+              }}
             >
             <ImageBackground style={{height:150,width:150, borderRadius:60,borderWidth: 4,
                 borderColor: "white"}}source={userr.image===null? require("../assets/location1.jpg") : {uri:userr.image}}>
-              <Text
+              
+             { /* <Text
                 style={{
                   color: COLORS.white,
                   fontSize: 20,
@@ -45,7 +54,8 @@ export default function MyProfile({ navigation}) {
                   marginTop: 10,
                 }}>
                 {userr.age}
-              </Text>
+            </Text>*/}
+            
               <View
                 style={{
                   flex: 1,
@@ -65,6 +75,7 @@ export default function MyProfile({ navigation}) {
               </View>
             </ImageBackground>
           </TouchableOpacity>
+          
         );
       };
         return (
@@ -97,7 +108,7 @@ export default function MyProfile({ navigation}) {
                         <Ionicons name="ios-add" size={48} color="#DFD8C8" style={{ marginTop: 6, marginLeft: 2 }}></Ionicons>
                     </TouchableOpacity>
                     </View>
-
+                 
                 </View>
 
                 <View style={styles.infoContainer}>
@@ -141,6 +152,8 @@ export default function MyProfile({ navigation}) {
                         <Text style={[styles.text, { fontSize: 24, color: "#DFD8C8", fontWeight: "300" }]}>{utilisateurs.length}</Text>
                         <Text style={[styles.text, { fontSize: 12, color: "#DFD8C8", textTransform: "uppercase" }]}>Media</Text>
                     </View>
+                    
+
                 </View>
                 <Text style={[styles.subText, styles.recent]}>Recent Activity</Text>
                 <View style={{ alignItems: "center" }}>
@@ -152,7 +165,7 @@ export default function MyProfile({ navigation}) {
                             </Text>
                         </View>
                     </View>
-
+                    
                     <View style={styles.recentItem}>
                         <View style={styles.activityIndicator}></View>
                         <View style={{ width: 250 }}>
@@ -162,8 +175,72 @@ export default function MyProfile({ navigation}) {
                         </View>
                     </View>
                 </View>
+                <Dialog
+        style={{
+          backgroundColor: "white",
+          borderRadius: 8,
+          width:300,
+          height:320,
+          alignSelf:"center"
+        }}
+        visible={visible}
+        onDismiss={() => setVisible(false)}
+      >
+        <Dialog.Title style={{textAlign:"center"}}>User Informations</Dialog.Title>
+        <Dialog.Content>
+          <Avatar
+            style={{ width: 70, height: 70 ,marginBottom:10,alignSelf:"center"}}
+            source={
+              selectedUser.image === undefined
+                ? require("../assets/profil.png")
+                : { uri: selectedUser.image }
+            }
+            resizeMode="center"
+          ></Avatar>
+          <Text
+            style={{
+              fontSize: 15,
+              fontWeight: "bold",
+              alignSelf: "center",
+            }}
+          >
+            {selectedUser.displayName}
+          </Text>
+          <Text
+            style={{
+              fontSize: 15,
+              fontWeight: "bold",
+              alignSelf: "center",
+            }}
+          >
+            {selectedUser.age} year
+          </Text>
+          <Text
+            style={{
+              fontSize: 15,
+              fontWeight: "bold",
+              alignSelf: "center",
+            }}
+          >
+            {selectedUser.job}
+          </Text>
+          <Text
+            style={{
+              fontSize: 15,
+              fontWeight: "bold",
+              alignSelf: "center",
+            }}
+          >
+           Reach me: {selectedUser.phone}
+          </Text>
+        </Dialog.Content>
+        <Dialog.Actions>
+          <TouchableOpacity style={styles.button} onPress={() => setVisible(false)}><Text style={{textAlign:"center",fontWeight:"bold",fontSize:18,color:'white'}}>OK</Text></TouchableOpacity>
+        </Dialog.Actions>
+      </Dialog>
             </ScrollView>
         </SafeAreaView>
+        
     );
 }
 
@@ -286,7 +363,17 @@ const styles = StyleSheet.create({
         borderRadius: 6,
         marginTop: 3,
         marginRight: 20
-    }
+    },
+    button: {
+        width:"50%",
+         borderRadius:5,
+         backgroundColor:"#7dce94",
+         height:40,
+         width:100,
+         justifyContent:"center",
+         marginTop:10,
+         alignSelf:"center"
+      }
 });
 
 
