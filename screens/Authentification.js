@@ -55,7 +55,7 @@ export default function Authentification({navigation}) {
   
   
       }}*/  onPress={() => login(email, password)}>
-      <Text style={{textAlign:"center",fontWeight:"bold",fontSize:18,color:'white'}}>Validate</Text>
+      <Text style={{textAlign:"center",fontWeight:"bold",fontSize:18,color:'white'}}>Login</Text>
  
       </TouchableOpacity>
       <TouchableOpacity style={{

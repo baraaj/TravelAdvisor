@@ -34,7 +34,7 @@ export default function MyProfile({ navigation}) {
       getAllUsers();
        },[]);
       
-      // console.log(utilisateurs);
+      
       const Card = ({userr}) => {
         return (
           <TouchableOpacity
@@ -46,15 +46,7 @@ export default function MyProfile({ navigation}) {
             <ImageBackground style={{height:150,width:150, borderRadius:60,borderWidth: 4,
                 borderColor: "white"}}source={userr.image===null? require("../assets/location1.jpg") : {uri:userr.image}}>
               
-             { /* <Text
-                style={{
-                  color: COLORS.white,
-                  fontSize: 20,
-                  fontWeight: 'bold',
-                  marginTop: 10,
-                }}>
-                {userr.age}
-            </Text>*/}
+             
             
               <View
                 style={{
@@ -64,7 +56,7 @@ export default function MyProfile({ navigation}) {
                   alignItems: 'flex-end',
                 }}>
                 <View style={{flexDirection: 'row'}}>
-                  <Text style={{alignSelf:"center",fontSize:15, color: COLORS.orange}}>
+                  <Text style={{fontSize:19,  color: COLORS.white,marginLeft:45}}>
                     {userr.displayName}
                   </Text>
                 </View>
@@ -161,7 +153,7 @@ export default function MyProfile({ navigation}) {
                         <View style={styles.activityIndicator}></View>
                         <View style={{ width: 250 }}>
                             <Text style={[styles.text, { color: "#41444B", fontWeight: "300" }]}>
-                                Started following <Text style={{ fontWeight: "400" }}>Jake Challeahe</Text> and <Text style={{ fontWeight: "400" }}>Luis Poteer</Text>
+                                Started following <Text style={{ fontWeight: "400" }}>Ahmed</Text> and <Text style={{ fontWeight: "400" }}>Ranya</Text>
                             </Text>
                         </View>
                     </View>
@@ -170,7 +162,7 @@ export default function MyProfile({ navigation}) {
                         <View style={styles.activityIndicator}></View>
                         <View style={{ width: 250 }}>
                             <Text style={[styles.text, { color: "#41444B", fontWeight: "300" }]}>
-                                Started following <Text style={{ fontWeight: "400" }}>Luke Harper</Text>
+                                Started following <Text style={{ fontWeight: "400" }}>Lilia</Text>
                             </Text>
                         </View>
                     </View>

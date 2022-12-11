@@ -73,7 +73,7 @@ const MyPosts = ({navigation}) => {
     };
      
     getPosts();
-     },[firestore]);
+     },[firestore,data]);
      const categoryIcons = [
         <Icon name="flight" size={25} color={COLORS.primary} />,
         <Icon name="beach-access" size={25} color={COLORS.primary} />,
