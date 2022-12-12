@@ -12,9 +12,6 @@ import {
     SafeAreaView,
     ScrollView,
     StatusBar,
-   
-    
-    
     TextInput,
     ImageBackground,
     FlatList,
@@ -93,7 +90,7 @@ const ChatScreen = ({ navigation }) => {
     
       addDoc(collection(firestore, 'chats'), {_id, createdAt,  text, user });
     }, []);
-    /*console.log(messages[0])*/
+    
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
       <StatusBar translucent={false} backgroundColor={COLORS.primary} />
@@ -102,7 +99,7 @@ const ChatScreen = ({ navigation }) => {
         <Icon name="person" size={28} color={COLORS.white} />
         </TouchableOpacity>
         <TouchableOpacity onPress={(e)=>{navigation.navigate("All")}}>
-    { /*   <Icon name="notifications-none" size={28} color={COLORS.white} />*/}
+    
     <Icon name="home"  type="AntDesign"size={28} color={COLORS.white} />
         </TouchableOpacity>
       </View>

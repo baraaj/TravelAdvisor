@@ -270,20 +270,11 @@ export const AuthProvider = ({ children }) => {
     } 
     return array;
      
-    //return user;
+     
      
   };
 
-  /*const matchUsers = async (loggedInProfile, userSwipped) => {
-    const id = useGenerateId(loggedInProfile.uid, userSwipped.uid);
-    await setDoc(doc(firestore, "matches", id), {
-      users: {
-        [loggedInProfile.uid]: loggedInProfile,
-        [userSwipped.uid]: userSwipped,
-      },
-      usersMatched: [user.uid, userSwipped.uid],
-    });
-  };*/
+
 
   return (
     <AuthContext.Provider

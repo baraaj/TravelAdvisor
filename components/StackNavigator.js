@@ -16,7 +16,6 @@ import Travel from './../screens/Travel';
 import Experience from './../screens/Experience';
 import UpdateProfile from './../screens/UpdateProfile';
 import MyPosts from './../screens/MyPosts';
-import Chat from "../screens/Chat";
 import Tab from "../screens/Tab";
 import Background from "./Background";
 import ChatScreen from './../screens/ChatScreen';
@@ -48,7 +47,7 @@ const StackNavigator = () => {
         <Stack.Screen name="MyProfile" component={MyProfile} />
         <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="Travel" component={Travel} />
-        <Stack.Screen name="Chatme" component={Chat} />
+        
         <Stack.Screen name="Ask" component={ChatScreen} />
         <Stack.Screen name="Share" component={Experience} />
        
