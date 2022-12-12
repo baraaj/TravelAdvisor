@@ -130,15 +130,15 @@ export default function MyProfile({ navigation}) {
                 <View style={{ marginTop: 32 }}>
                     
                     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-          <ScrollView>
-        <FlatList
-            contentContainerStyle={{paddingLeft: 20}}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            data={utilisateurs}
-            renderItem={({item}) => <Card userr={item} />}
-          />
-          </ScrollView>
+          
+                      <FlatList
+                          contentContainerStyle={{paddingLeft: 20}}
+                          horizontal
+                          showsHorizontalScrollIndicator={false}
+                          data={utilisateurs}
+                          renderItem={({item}) => <Card userr={item} />}
+                        />
+         
                     </ScrollView>
                     <View style={styles.mediaCount}>
                         <Text style={[styles.text, { fontSize: 24, color: "#DFD8C8", fontWeight: "300" }]}>{utilisateurs.length}</Text>

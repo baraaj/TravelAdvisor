@@ -40,7 +40,7 @@ const Travel = ({navigation}) => {
 const searchFilterFunction = (text) => {
   // Check if searched text is not blank
   if (text) {
-    // Inserted text is not blank
+    // Inserted text is not blankrr
     // Filter the masterDataSource
     // Update FilteredDataSource
     const newData = data.filter(function (item) {
@@ -63,27 +63,13 @@ const searchFilterFunction = (text) => {
 
  
 
-   /* useEffect(() => {
-      ref_places.on("value",(dataSnapshot)=>{
-        let d = [];
-        dataSnapshot.forEach((place)=>{
-            d.push(place.val());
-        });
-        setdata(d);
-        setFilteredDataSource(d);
-        setMasterDataSource(d);
-    })
-      
-      return () => {
-        ref_places.off();
-      };
-    }, []); */
+  
     useEffect(() => {
       const getPosts= async () => {
       
        const usersposts=await getAllPosts();
       setdata(usersposts);
-      setFilteredDataSource(usersposts);
+        setFilteredDataSource(usersposts);
         setMasterDataSource(usersposts);
       
     };
@@ -204,7 +190,6 @@ const searchFilterFunction = (text) => {
         <Icon name="person" size={28} color={COLORS.white} />
         </TouchableOpacity>
         <TouchableOpacity onPress={()=>logout()}>
-    { /*   <Icon name="notifications-none" size={28} color={COLORS.white} />*/}
     <Icon name="logout"  type="AntDesign"size={28} color={COLORS.white} />
         </TouchableOpacity>
       </View>
